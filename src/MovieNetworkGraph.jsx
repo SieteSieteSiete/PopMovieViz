@@ -37,12 +37,12 @@ const MovieNetworkGraph = () => {
 
   // Debug Panel Component
   const DebugPanel = () => (
-    <div className="fixed top-0 right-0 bg-black/80 text-white p-4 m-4 rounded-lg shadow-lg font-mono text-sm">
+    <div className="fixed top-0 right-0 bg-gray-900/90 text-gray-200 p-4 m-4 rounded-lg shadow-lg font-mono text-sm border border-gray-700">
       <div className="flex justify-between items-center mb-2">
         <h3 className="font-bold">Debug Panel</h3>
         <button 
           onClick={() => setShowDebugPanel(false)}
-          className="text-gray-400 hover:text-white"
+          className="text-gray-400 hover:text-gray-200"
         >
           [X]
         </button>
@@ -52,7 +52,7 @@ const MovieNetworkGraph = () => {
         <p>Links: {debugInfo.linkCount}</p>
         <p>FPS: {debugInfo.fps.toFixed(1)}</p>
         {debugInfo.hoveredNode && (
-          <div className="mt-2 p-2 bg-gray-700 rounded">
+          <div className="mt-2 p-2 bg-gray-800 rounded border border-gray-700">
             <p>Hovered Node:</p>
             <pre className="text-xs">
               {JSON.stringify(debugInfo.hoveredNode, null, 2)}
@@ -60,7 +60,7 @@ const MovieNetworkGraph = () => {
           </div>
         )}
         {debugInfo.selectedNode && (
-          <div className="mt-2 p-2 bg-gray-700 rounded">
+          <div className="mt-2 p-2 bg-gray-800 rounded border border-gray-700">
             <p>Selected Node:</p>
             <pre className="text-xs">
               {JSON.stringify(debugInfo.selectedNode, null, 2)}
@@ -75,24 +75,27 @@ const MovieNetworkGraph = () => {
   const ShowDebugButton = () => (
     <button
       onClick={() => setShowDebugPanel(true)}
-      className="fixed top-4 right-4 bg-black/80 text-white px-4 py-2 rounded"
+      className="fixed top-4 right-4 bg-gray-900/90 text-gray-200 px-4 py-2 rounded border border-gray-700"
     >
       Show Debug
     </button>
   );
 
   if (!graphData) {
-    return <div>Loading...</div>;
+    return <div className="w-full h-screen bg-gray-900 text-gray-200 flex items-center justify-center">
+      Loading...
+    </div>;
   }
 
   return (
-    <div className="w-full h-screen relative">
+    <div className="w-full h-screen bg-gray-900">
       <ForceGraph2D
         graphData={graphData}
         nodeId="id"
         nodeLabel="title"
         nodeColor="color"
-        linkColor={() => '#999'}
+        linkColor={() => 'rgba(255, 255, 255, 0.2)'}
+        backgroundColor="#111827"
         onNodeHover={node => {
           setDebugInfo(prev => ({ ...prev, hoveredNode: node }));
         }}
