@@ -1,0 +1,1734 @@
+{
+  "graph": {
+    "nodes": [
+      {
+        "id": "1034541",
+        "title": "Terrifier 3",
+        "year": "2024",
+        "popularity": 6883.159,
+        "size": 44.18489127050652,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "912649",
+        "title": "Venom: The Last Dance",
+        "year": "2024",
+        "popularity": 5590.757,
+        "size": 43.145244140169154,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "1184918",
+        "title": "The Wild Robot",
+        "year": "2024",
+        "popularity": 5275.345,
+        "size": 42.85494451073326,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "698687",
+        "title": "Transformers One",
+        "year": "2024",
+        "popularity": 3135.612,
+        "size": 40.2544925774582,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "933260",
+        "title": "The Substance",
+        "year": "2024",
+        "popularity": 2881.789,
+        "size": 39.83256753654152,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "889737",
+        "title": "Joker: Folie à Deux",
+        "year": "2024",
+        "popularity": 2614.505,
+        "size": 39.34606237244603,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "945961",
+        "title": "Alien: Romulus",
+        "year": "2024",
+        "popularity": 1992.724,
+        "size": 37.98879762847886,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "1022789",
+        "title": "Inside Out 2",
+        "year": "2024",
+        "popularity": 1676.036,
+        "size": 37.12391614248993,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "335983",
+        "title": "Venom",
+        "year": "2018",
+        "popularity": 1917.653,
+        "size": 37.796893281558475,
+        "color": "#1f77b4"
+      },
+      {
+        "id": "533535",
+        "title": "Deadpool & Wolverine",
+        "year": "2024",
+        "popularity": 2052.905,
+        "size": 38.13749069100873,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "1084736",
+        "title": "The Count of Monte-Cristo",
+        "year": "2024",
+        "popularity": 2126.371,
+        "size": 38.31321112030795,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "580489",
+        "title": "Venom: Let There Be Carnage",
+        "year": "2021",
+        "popularity": 1488.305,
+        "size": 36.53032423584065,
+        "color": "#1f77b4"
+      },
+      {
+        "id": "354912",
+        "title": "Coco",
+        "year": "2017",
+        "popularity": 1619.229,
+        "size": 36.951613881305086,
+        "color": "#1f77b4"
+      },
+      {
+        "id": "1051896",
+        "title": "Arcadian",
+        "year": "2024",
+        "popularity": 1531.173,
+        "size": 36.67221134103527,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "1029235",
+        "title": "Azrael",
+        "year": "2024",
+        "popularity": 1063.12,
+        "size": 34.84951722748535,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "519182",
+        "title": "Despicable Me 4",
+        "year": "2024",
+        "popularity": 1471.132,
+        "size": 36.472334845907,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "1196470",
+        "title": "Survive",
+        "year": "2024",
+        "popularity": 1469.299,
+        "size": 36.46610530225037,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "420634",
+        "title": "Terrifier",
+        "year": "2018",
+        "popularity": 1298.546,
+        "size": 35.848851258425654,
+        "color": "#1f77b4"
+      },
+      {
+        "id": "976734",
+        "title": "Canary Black",
+        "year": "2024",
+        "popularity": 1301.295,
+        "size": 35.85941685802578,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "179387",
+        "title": "Heavenly Touch",
+        "year": "2009",
+        "popularity": 1292.062,
+        "size": 35.82384164062488,
+        "color": "#1f77b4"
+      },
+      {
+        "id": "1063877",
+        "title": "Don't Move",
+        "year": "2024",
+        "popularity": 1182.247,
+        "size": 35.38008816696664,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "917496",
+        "title": "Beetlejuice Beetlejuice",
+        "year": "2024",
+        "popularity": 1181.733,
+        "size": 35.37791570562678,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "663712",
+        "title": "Terrifier 2",
+        "year": "2022",
+        "popularity": 1179.97,
+        "size": 35.37045706836599,
+        "color": "#1f77b4"
+      },
+      {
+        "id": "1079091",
+        "title": "It Ends with Us",
+        "year": "2024",
+        "popularity": 1064.586,
+        "size": 34.856400807808406,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "3933",
+        "title": "Corpse Bride",
+        "year": "2005",
+        "popularity": 910.601,
+        "size": 34.07601197171642,
+        "color": "#1f77b4"
+      },
+      {
+        "id": "991610",
+        "title": "Invasion",
+        "year": "2024",
+        "popularity": 892.123,
+        "size": 33.97362154676712,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "1125510",
+        "title": "The Platform 2",
+        "year": "2024",
+        "popularity": 888.176,
+        "size": 33.95147595586242,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "86328",
+        "title": "Terrifier",
+        "year": "2011",
+        "popularity": 849.503,
+        "size": 33.729139695832785,
+        "color": "#1f77b4"
+      },
+      {
+        "id": "978796",
+        "title": "Bagman",
+        "year": "2024",
+        "popularity": 838.107,
+        "size": 33.661691155563545,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "1371727",
+        "title": "Sing: Thriller",
+        "year": "2024",
+        "popularity": 836.816,
+        "size": 33.65399252983622,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "1159311",
+        "title": "My Hero Academia: You're Next",
+        "year": "2024",
+        "popularity": 821.294,
+        "size": 33.56048997671576,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "616446",
+        "title": "Brothers",
+        "year": "2024",
+        "popularity": 807.492,
+        "size": 33.47585392050584,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "721173",
+        "title": "Good Mother 3",
+        "year": "2019",
+        "popularity": 742.142,
+        "size": 33.05443571775041,
+        "color": "#1f77b4"
+      },
+      {
+        "id": "231001",
+        "title": "All Hallows' Eve",
+        "year": "2013",
+        "popularity": 713.747,
+        "size": 32.8596431696092,
+        "color": "#1f77b4"
+      },
+      {
+        "id": "957452",
+        "title": "The Crow",
+        "year": "2024",
+        "popularity": 659.353,
+        "size": 32.46387270262424,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "823219",
+        "title": "Flow",
+        "year": "2024",
+        "popularity": 649.347,
+        "size": 32.38753033299182,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "573435",
+        "title": "Bad Boys: Ride or Die",
+        "year": "2024",
+        "popularity": 646.837,
+        "size": 32.36819560750049,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "1047373",
+        "title": "The Silent Hour",
+        "year": "2024",
+        "popularity": 639.803,
+        "size": 32.31361038695565,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "1144962",
+        "title": "Transmorphers: Mech Beasts",
+        "year": "2023",
+        "popularity": 633.688,
+        "size": 32.2656676978183,
+        "color": "#1f77b4"
+      },
+      {
+        "id": "1100782",
+        "title": "Smile 2",
+        "year": "2024",
+        "popularity": 616.758,
+        "size": 32.13048397503724,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "1025596",
+        "title": "Blood for Dust",
+        "year": "2024",
+        "popularity": 390.025,
+        "size": 29.843857482801525,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "1354627",
+        "title": "SpongeBob Squarepants: Kreepaway Kamp",
+        "year": "2024",
+        "popularity": 501.765,
+        "size": 31.10061432055108,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "824003",
+        "title": "Diabolik - Who Are You?",
+        "year": "2023",
+        "popularity": 517.931,
+        "size": 31.258854631753223,
+        "color": "#1f77b4"
+      },
+      {
+        "id": "726139",
+        "title": "Project Silence",
+        "year": "2024",
+        "popularity": 496.467,
+        "size": 31.04764611370157,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "1149912",
+        "title": "Kelas Bintang - Hot Moms",
+        "year": "2023",
+        "popularity": 476.356,
+        "size": 30.84131271879287,
+        "color": "#1f77b4"
+      },
+      {
+        "id": "1010581",
+        "title": "My Fault",
+        "year": "2023",
+        "popularity": 451.755,
+        "size": 30.576755701624254,
+        "color": "#1f77b4"
+      },
+      {
+        "id": "1087822",
+        "title": "Hellboy: The Crooked Man",
+        "year": "2024",
+        "popularity": 459.1,
+        "size": 30.657219285807113,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "1079485",
+        "title": "Winnie-the-Pooh: Blood and Honey 2",
+        "year": "2024",
+        "popularity": 464.854,
+        "size": 30.719361401572193,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "929563",
+        "title": "Big City Greens the Movie: Spacecation",
+        "year": "2024",
+        "popularity": 446.604,
+        "size": 30.519544564741654,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "1118031",
+        "title": "Apocalypse Z: The Beginning of the End",
+        "year": "2024",
+        "popularity": 513.814,
+        "size": 31.21902835189694,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "1029281",
+        "title": "Strange Darling",
+        "year": "2024",
+        "popularity": 382.742,
+        "size": 29.749852258892847,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "1320786",
+        "title": "Terrifier 4",
+        "year": null,
+        "popularity": 431.229,
+        "size": 30.344777701936284,
+        "color": "#1f77b4"
+      },
+      {
+        "id": "1249532",
+        "title": "Rippy",
+        "year": "2024",
+        "popularity": 417.807,
+        "size": 30.18705096639428,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "592695",
+        "title": "Pleasure",
+        "year": "2021",
+        "popularity": 416.976,
+        "size": 30.177120073042186,
+        "color": "#1f77b4"
+      },
+      {
+        "id": "1145491",
+        "title": "Operation Black Ops",
+        "year": "2023",
+        "popularity": 415.78,
+        "size": 30.162792523214716,
+        "color": "#1f77b4"
+      },
+      {
+        "id": "9479",
+        "title": "The Nightmare Before Christmas",
+        "year": "1993",
+        "popularity": 325.729,
+        "size": 28.945655405599595,
+        "color": "#1f77b4"
+      },
+      {
+        "id": "814889",
+        "title": "Never Let Go",
+        "year": "2024",
+        "popularity": 399.565,
+        "size": 29.964380252341243,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "1329336",
+        "title": "The Bad Guys: Haunted Heist",
+        "year": "2024",
+        "popularity": 398.095,
+        "size": 29.94599741893893,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "1091181",
+        "title": "Family Pack",
+        "year": "2024",
+        "popularity": 375.057,
+        "size": 29.648703638225506,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "639720",
+        "title": "IF",
+        "year": "2024",
+        "popularity": 378.505,
+        "size": 29.694338859897293,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "1032823",
+        "title": "Trap",
+        "year": "2024",
+        "popularity": 439.795,
+        "size": 30.44289957380834,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "1359227",
+        "title": "LEGO Marvel Avengers: Mission Demolition",
+        "year": "2024",
+        "popularity": 437.356,
+        "size": 30.41515682816701,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "1022796",
+        "title": "Wish",
+        "year": "2023",
+        "popularity": 427.497,
+        "size": 30.301418684232324,
+        "color": "#1f77b4"
+      },
+      {
+        "id": "748783",
+        "title": "The Garfield Movie",
+        "year": "2024",
+        "popularity": 425.07,
+        "size": 30.27301826009634,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "845781",
+        "title": "Red One",
+        "year": "2024",
+        "popularity": 421.968,
+        "size": 30.2364826303323,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "826510",
+        "title": "Harold and the Purple Crayon",
+        "year": "2024",
+        "popularity": 420.413,
+        "size": 30.218066752216863,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "72808",
+        "title": "The Flesh",
+        "year": "1991",
+        "popularity": 416.46,
+        "size": 30.170943656588804,
+        "color": "#1f77b4"
+      },
+      {
+        "id": "1114513",
+        "title": "Speak No Evil",
+        "year": "2024",
+        "popularity": 408.416,
+        "size": 30.07365877023164,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "653346",
+        "title": "Kingdom of the Planet of the Apes",
+        "year": "2024",
+        "popularity": 404.417,
+        "size": 30.024580835155753,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "603692",
+        "title": "John Wick: Chapter 4",
+        "year": "2023",
+        "popularity": 402.118,
+        "size": 29.996146615290947,
+        "color": "#1f77b4"
+      },
+      {
+        "id": "1059264",
+        "title": "The Inseparables",
+        "year": "2023",
+        "popularity": 392.467,
+        "size": 29.87498600785383,
+        "color": "#1f77b4"
+      },
+      {
+        "id": "1075676",
+        "title": "Uprising",
+        "year": "2024",
+        "popularity": 390.264,
+        "size": 29.846912619808897,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "1226578",
+        "title": "Longlegs",
+        "year": "2024",
+        "popularity": 389.22,
+        "size": 29.833553413208765,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "783110",
+        "title": "Smugglers",
+        "year": "2023",
+        "popularity": 387.787,
+        "size": 29.815158179066444,
+        "color": "#1f77b4"
+      },
+      {
+        "id": "762441",
+        "title": "A Quiet Place: Day One",
+        "year": "2024",
+        "popularity": 383.42,
+        "size": 29.758678524394927,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "1047020",
+        "title": "The Last Stop in Yuma County",
+        "year": "2024",
+        "popularity": 376.499,
+        "size": 29.667839598394742,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "365177",
+        "title": "Borderlands",
+        "year": "2024",
+        "popularity": 369.906,
+        "size": 29.579743306158907,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "1118031",
+        "title": "Apocalypse Z: The Beginning of the End",
+        "year": "2024",
+        "popularity": 367.01,
+        "size": 29.54055055856385,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "916192",
+        "title": "The Tunnel to Summer, the Exit of Goodbyes",
+        "year": "2022",
+        "popularity": 359.638,
+        "size": 29.43937342569747,
+        "color": "#1f77b4"
+      },
+      {
+        "id": "940551",
+        "title": "Migration",
+        "year": "2023",
+        "popularity": 355.58,
+        "size": 29.38279309303312,
+        "color": "#1f77b4"
+      },
+      {
+        "id": "55685",
+        "title": "To Be Twenty",
+        "year": "1978",
+        "popularity": 355.5,
+        "size": 29.381671199271754,
+        "color": "#1f77b4"
+      },
+      {
+        "id": "507241",
+        "title": "The Killer's Game",
+        "year": "2024",
+        "popularity": 354.131,
+        "size": 29.362433677454852,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "1140648",
+        "title": "Double Blind",
+        "year": "2024",
+        "popularity": 353.024,
+        "size": 29.346823537229287,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "1255017",
+        "title": "Caras vemos",
+        "year": "2024",
+        "popularity": 352.083,
+        "size": 29.333515783869583,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "1215162",
+        "title": "Kill 'em All 2",
+        "year": "2024",
+        "popularity": 345.848,
+        "size": 29.244433218166698,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "482600",
+        "title": "Japanese Mom",
+        "year": "2017",
+        "popularity": 344.925,
+        "size": 29.23110994277724,
+        "color": "#1f77b4"
+      },
+      {
+        "id": "931944",
+        "title": "The Devil's Bath",
+        "year": "2024",
+        "popularity": 341.581,
+        "size": 29.18254063045896,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "1364082",
+        "title": "Hijack '93",
+        "year": "2024",
+        "popularity": 339.024,
+        "size": 29.145081016771343,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "718821",
+        "title": "Twisters",
+        "year": "2024",
+        "popularity": 338.715,
+        "size": 29.14053515400218,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "1147710",
+        "title": "Hijack 1971",
+        "year": "2024",
+        "popularity": 336.889,
+        "size": 29.11358719590144,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "1064028",
+        "title": "Subservience",
+        "year": "2024",
+        "popularity": 334.655,
+        "size": 29.08041923371673,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "198663",
+        "title": "The Maze Runner",
+        "year": "2014",
+        "popularity": 332.958,
+        "size": 29.055076182833503,
+        "color": "#1f77b4"
+      },
+      {
+        "id": "1024127",
+        "title": "King of Killers",
+        "year": "2023",
+        "popularity": 332.476,
+        "size": 29.047854493740765,
+        "color": "#1f77b4"
+      },
+      {
+        "id": "827931",
+        "title": "Time Cut",
+        "year": "2024",
+        "popularity": 332.238,
+        "size": 29.04428474704114,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "588648",
+        "title": "Dragonkeeper",
+        "year": "2024",
+        "popularity": 329.825,
+        "size": 29.00794767329557,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "173705",
+        "title": "Female Teacher: In Front of the Students",
+        "year": "1982",
+        "popularity": 329.243,
+        "size": 28.99914373557103,
+        "color": "#1f77b4"
+      },
+      {
+        "id": "823464",
+        "title": "Godzilla x Kong: The New Empire",
+        "year": "2024",
+        "popularity": 323.48,
+        "size": 28.91111950481382,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "14836",
+        "title": "Coraline",
+        "year": "2009",
+        "popularity": 321.939,
+        "size": 28.88731725449119,
+        "color": "#1f77b4"
+      },
+      {
+        "id": "877817",
+        "title": "Wolfs",
+        "year": "2024",
+        "popularity": 319.704,
+        "size": 28.852592896686296,
+        "color": "#ff7f0e"
+      },
+      {
+        "id": "1308546",
+        "title": "Carved",
+        "year": "2024",
+        "popularity": 318.079,
+        "size": 28.827193605138692,
+        "color": "#ff7f0e"
+      }
+    ],
+    "links": [
+      {
+        "source": "663712",
+        "target": "1320786",
+        "actors": [
+          "David Howard Thornton",
+          "Lauren LaVera"
+        ],
+        "value": 2,
+        "weight": 1.4142135623730951
+      },
+      {
+        "source": "663712",
+        "target": "1034541",
+        "actors": [
+          "Kailey Hyman",
+          "Samantha Scaffidi",
+          "Lauren LaVera",
+          "David Howard Thornton",
+          "Chris Irvine",
+          "Elliott Fullam",
+          "Phil Falcone"
+        ],
+        "value": 7,
+        "weight": 2.6457513110645907
+      },
+      {
+        "source": "1034541",
+        "target": "1320786",
+        "actors": [
+          "David Howard Thornton",
+          "Lauren LaVera"
+        ],
+        "value": 2,
+        "weight": 1.4142135623730951
+      },
+      {
+        "source": "420634",
+        "target": "663712",
+        "actors": [
+          "Steven Della Salla",
+          "Jenna Kanell",
+          "Samantha Scaffidi",
+          "Katie Maguire",
+          "Jason Leavy",
+          "Gino Cafarelli",
+          "Michael Leavy",
+          "Cory DuVal",
+          "David Howard Thornton",
+          "Erick Zamora",
+          "Matt McAllister",
+          "Catherine Corcoran",
+          "Phil Falcone"
+        ],
+        "value": 13,
+        "weight": 3.605551275463989
+      },
+      {
+        "source": "420634",
+        "target": "1320786",
+        "actors": [
+          "David Howard Thornton"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "420634",
+        "target": "1034541",
+        "actors": [
+          "Samantha Scaffidi",
+          "David Howard Thornton",
+          "Phil Falcone"
+        ],
+        "value": 3,
+        "weight": 1.7320508075688772
+      },
+      {
+        "source": "1029281",
+        "target": "1034541",
+        "actors": [
+          "Jason Patric"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "86328",
+        "target": "231001",
+        "actors": [
+          "Mike Giannelli",
+          "Gary LoSavio",
+          "Daniel Rodas",
+          "Marie Maser",
+          "Jennifer Castellano",
+          "Michael Chmiel"
+        ],
+        "value": 6,
+        "weight": 2.449489742783178
+      },
+      {
+        "source": "86328",
+        "target": "1034541",
+        "actors": [
+          "Marie Maser"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "231001",
+        "target": "1034541",
+        "actors": [
+          "Marie Maser"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "580489",
+        "target": "912649",
+        "actors": [
+          "Otis Winston",
+          "Peggy Lu",
+          "Stephen Graham",
+          "Reid Scott",
+          "Tom Hardy"
+        ],
+        "value": 5,
+        "weight": 2.23606797749979
+      },
+      {
+        "source": "335983",
+        "target": "912649",
+        "actors": [
+          "Peggy Lu",
+          "Tom Hardy",
+          "Otis Winston",
+          "Reid Scott"
+        ],
+        "value": 4,
+        "weight": 2.0
+      },
+      {
+        "source": "335983",
+        "target": "580489",
+        "actors": [
+          "Otis Winston",
+          "Peggy Lu",
+          "Michelle Williams",
+          "Woody Harrelson",
+          "Reid Scott",
+          "Tom Hardy"
+        ],
+        "value": 6,
+        "weight": 2.449489742783178
+      },
+      {
+        "source": "354912",
+        "target": "912649",
+        "actors": [
+          "Alanna Ubach"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "762441",
+        "target": "1184918",
+        "actors": [
+          "Lupita Nyong'o"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "748783",
+        "target": "1184918",
+        "actors": [
+          "Ving Rhames"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "917496",
+        "target": "1184918",
+        "actors": [
+          "Catherine O'Hara"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "9479",
+        "target": "917496",
+        "actors": [
+          "Tim Burton",
+          "Catherine O'Hara"
+        ],
+        "value": 2,
+        "weight": 1.4142135623730951
+      },
+      {
+        "source": "9479",
+        "target": "1184918",
+        "actors": [
+          "Catherine O'Hara"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "1184918",
+        "target": "1354627",
+        "actors": [
+          "Dee Bradley Baker"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "533535",
+        "target": "698687",
+        "actors": [
+          "Chris Hemsworth"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "698687",
+        "target": "823464",
+        "actors": [
+          "Brian Tyree Henry"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "698687",
+        "target": "1371727",
+        "actors": [
+          "Scarlett Johansson"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "639720",
+        "target": "940551",
+        "actors": [
+          "Keegan-Michael Key",
+          "Awkwafina"
+        ],
+        "value": 2,
+        "weight": 1.4142135623730951
+      },
+      {
+        "source": "639720",
+        "target": "698687",
+        "actors": [
+          "Keegan-Michael Key"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "698687",
+        "target": "940551",
+        "actors": [
+          "Keegan-Michael Key"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "603692",
+        "target": "698687",
+        "actors": [
+          "Laurence Fishburne"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "698687",
+        "target": "1359227",
+        "actors": [
+          "Steve Blum"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "933260",
+        "target": "1084736",
+        "actors": [
+          "Oscar Lesage",
+          "Axel Baille"
+        ],
+        "value": 2,
+        "weight": 1.4142135623730951
+      },
+      {
+        "source": "519182",
+        "target": "889737",
+        "actors": [
+          "Steve Coogan"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "335983",
+        "target": "889737",
+        "actors": [
+          "Mac Brandt"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "198663",
+        "target": "889737",
+        "actors": [
+          "Don McManus"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "940551",
+        "target": "945961",
+        "actors": [
+          "Isabela Merced"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "945961",
+        "target": "1100782",
+        "actors": [
+          "Trevor Newlin"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "1022789",
+        "target": "1022796",
+        "actors": [
+          "Yvette Nicole Brown"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "354912",
+        "target": "1022789",
+        "actors": [
+          "John Ratzenberger"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "639720",
+        "target": "1022789",
+        "actors": [
+          "Bobby Moynihan"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "335983",
+        "target": "1079091",
+        "actors": [
+          "Jenny Slate"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "335983",
+        "target": "826510",
+        "actors": [
+          "Elizabeth Becka"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "335983",
+        "target": "845781",
+        "actors": [
+          "Matthew Cornwell"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "533535",
+        "target": "639720",
+        "actors": [
+          "Ryan Reynolds",
+          "Blake Lively"
+        ],
+        "value": 2,
+        "weight": 1.4142135623730951
+      },
+      {
+        "source": "533535",
+        "target": "845781",
+        "actors": [
+          "Chris Evans"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "533535",
+        "target": "580489",
+        "actors": [
+          "Ed Kear"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "639720",
+        "target": "1079091",
+        "actors": [
+          "Blake Lively"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "533535",
+        "target": "1079091",
+        "actors": [
+          "Blake Lively"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "533535",
+        "target": "1371727",
+        "actors": [
+          "Matthew McConaughey"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "580489",
+        "target": "845781",
+        "actors": [
+          "J.K. Simmons"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "354912",
+        "target": "519182",
+        "actors": [
+          "Benjamin Bratt"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "1051896",
+        "target": "1226578",
+        "actors": [
+          "Nicolas Cage"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "519182",
+        "target": "639720",
+        "actors": [
+          "Steve Carell"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "519182",
+        "target": "940551",
+        "actors": [
+          "Will Collyer",
+          "Abby Craden",
+          "Aaron Hendry",
+          "Laraine Newman",
+          "Nisa Ward",
+          "Willow Geer",
+          "Andreana Weiner",
+          "Chris Renaud",
+          "John DeMita"
+        ],
+        "value": 9,
+        "weight": 3.0
+      },
+      {
+        "source": "663712",
+        "target": "845781",
+        "actors": [
+          "Jenna Kanell"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "420634",
+        "target": "573435",
+        "actors": [
+          "Jenna Kanell"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "420634",
+        "target": "845781",
+        "actors": [
+          "Jenna Kanell"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "573435",
+        "target": "663712",
+        "actors": [
+          "Jenna Kanell"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "573435",
+        "target": "845781",
+        "actors": [
+          "Jenna Kanell",
+          "Derek Russo"
+        ],
+        "value": 2,
+        "weight": 1.4142135623730951
+      },
+      {
+        "source": "231001",
+        "target": "663712",
+        "actors": [
+          "Katie Maguire"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "231001",
+        "target": "420634",
+        "actors": [
+          "Daniel Rodas",
+          "Katie Maguire"
+        ],
+        "value": 2,
+        "weight": 1.4142135623730951
+      },
+      {
+        "source": "86328",
+        "target": "420634",
+        "actors": [
+          "Daniel Rodas"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "976734",
+        "target": "1215162",
+        "actors": [
+          "Andrei Lenart"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "1063877",
+        "target": "1064028",
+        "actors": [
+          "Kate Nichols"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "824003",
+        "target": "917496",
+        "actors": [
+          "Monica Bellucci"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "917496",
+        "target": "940551",
+        "actors": [
+          "Danny DeVito"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "917496",
+        "target": "1079485",
+        "actors": [
+          "Philip Philmar"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "1079091",
+        "target": "1100782",
+        "actors": [
+          "Daphne Zelle"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "3933",
+        "target": "9479",
+        "actors": [
+          "Danny Elfman"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "603692",
+        "target": "1125510",
+        "actors": [
+          "Natalia Tena"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "1010581",
+        "target": "1125510",
+        "actors": [
+          "Ivan Massagué"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "845781",
+        "target": "1371727",
+        "actors": [
+          "Nick Kroll"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "940551",
+        "target": "1371727",
+        "actors": [
+          "Joy Poirel"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "616446",
+        "target": "1308546",
+        "actors": [
+          "Ted Ferguson"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "573435",
+        "target": "616446",
+        "actors": [
+          "Nathan Hesse"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "603692",
+        "target": "957452",
+        "actors": [
+          "Bill Skarsgård"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "1029281",
+        "target": "1100782",
+        "actors": [
+          "Kyle Gallner"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "1025596",
+        "target": "1114513",
+        "actors": [
+          "Scoot McNairy"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "1024127",
+        "target": "1025596",
+        "actors": [
+          "Stephen Dorff"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "603692",
+        "target": "1354627",
+        "actors": [
+          "Clancy Brown"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "940551",
+        "target": "1354627",
+        "actors": [
+          "Carlos Alazraqui",
+          "Jess Harnell"
+        ],
+        "value": 2,
+        "weight": 1.4142135623730951
+      },
+      {
+        "source": "726139",
+        "target": "1075676",
+        "actors": [
+          "Ahn Seong-bong",
+          "Song You-hyun"
+        ],
+        "value": 2,
+        "weight": 1.4142135623730951
+      },
+      {
+        "source": "726139",
+        "target": "783110",
+        "actors": [
+          "Kwak Jin-seok"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "588648",
+        "target": "1010581",
+        "actors": [
+          "Álvaro Navarro"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "929563",
+        "target": "1359227",
+        "actors": [
+          "Roger Craig Smith"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "639720",
+        "target": "877817",
+        "actors": [
+          "George Clooney"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "748783",
+        "target": "1022796",
+        "actors": [
+          "Harvey Guillén"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "845781",
+        "target": "1022796",
+        "actors": [
+          "Jon Rudnitsky"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "718821",
+        "target": "1226578",
+        "actors": [
+          "Kiernan Shipka"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "718821",
+        "target": "845781",
+        "actors": [
+          "Kiernan Shipka"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "845781",
+        "target": "1226578",
+        "actors": [
+          "Kiernan Shipka"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "14836",
+        "target": "603692",
+        "actors": [
+          "Ian McShane"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "507241",
+        "target": "603692",
+        "actors": [
+          "Scott Adkins",
+          "Marko Zaror"
+        ],
+        "value": 2,
+        "weight": 1.4142135623730951
+      },
+      {
+        "source": "783110",
+        "target": "1075676",
+        "actors": [
+          "Park Jeong-min"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "1075676",
+        "target": "1147710",
+        "actors": [
+          "Jeon Yeong"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "783110",
+        "target": "1147710",
+        "actors": [
+          "Kim Jong-soo"
+        ],
+        "value": 1,
+        "weight": 1.0
+      },
+      {
+        "source": "827931",
+        "target": "1024127",
+        "actors": [
+          "Marina Stephenson Kerr"
+        ],
+        "value": 1,
+        "weight": 1.0
+      }
+    ]
+  },
+  "metadata": {
+    "totalNodes": 100,
+    "totalLinks": 94,
+    "yearsRange": [
+      "1978",
+      "1982",
+      "1991",
+      "1993",
+      "2005",
+      "2009",
+      "2011",
+      "2013",
+      "2014",
+      "2017",
+      "2018",
+      "2019",
+      "2021",
+      "2022",
+      "2023",
+      "2024"
+    ],
+    "maxPopularity": 6883.159,
+    "maxSharedActors": 13
+  }
+}
