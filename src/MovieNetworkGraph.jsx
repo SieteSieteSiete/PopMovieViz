@@ -56,7 +56,7 @@ const MovieNetworkGraph = () => {
       // Add text label if zoomed in enough
       if (globalScale >= 1.2) {
         const label = truncateTitle(node.title);
-        ctx.font = `${3 / globalScale}px Arial`;
+        ctx.font = `${12 / globalScale}px Arial`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'top';
         
