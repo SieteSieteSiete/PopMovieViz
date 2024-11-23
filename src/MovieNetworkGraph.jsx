@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import ForceGraph2D from 'react-force-graph-2d';
 import movieNetwork from './processed_movie_network.json';
+import { QuadTree } from './utils/QuadTree';
 
 const MovieNetworkGraph = () => {
   const [graphData, setGraphData] = useState(null);
@@ -12,6 +13,7 @@ const MovieNetworkGraph = () => {
     fps: 0
   });
   const [showDebugPanel, setShowDebugPanel] = useState(true);
+  const [visibleLabels, setVisibleLabels] = useState(new Set());
 
   // Function to truncate movie titles
   const truncateTitle = (title, maxLength = 15) => {
@@ -41,20 +43,78 @@ const MovieNetworkGraph = () => {
     }
   }, [graphData]);
 
+  const checkLabelCollisions = useMemo(() => {
+    return (nodes, ctx, globalScale) => {
+      if (globalScale < 1.2) return new Set();
+
+      // Find bounds of the graph
+      let minX = Infinity, minY = Infinity;
+      let maxX = -Infinity, maxY = -Infinity;
+
+      // First pass: calculate all label rectangles and graph bounds
+      const labelRects = nodes.map(node => {
+        const label = truncateTitle(node.title);
+        ctx.font = `${12 / globalScale}px Arial`;
+        const textWidth = ctx.measureText(label).width;
+        const padding = 2 / globalScale;
+        const textHeight = 4 / globalScale;
+        const radius = (node.size / 2) * 0.15;
+
+        const rect = {
+          id: node.id,
+          x: node.x - textWidth / 2 - padding,
+          y: node.y + radius + 2 / globalScale,
+          width: textWidth + padding * 2,
+          height: textHeight + padding * 2
+        };
+
+        minX = Math.min(minX, rect.x);
+        minY = Math.min(minY, rect.y);
+        maxX = Math.max(maxX, rect.x + rect.width);
+        maxY = Math.max(maxY, rect.y + rect.height);
+
+        return rect;
+      });
+
+      // Create quadtree with graph bounds
+      const bounds = {
+        x: minX,
+        y: minY,
+        width: maxX - minX,
+        height: maxY - minY
+      };
+      
+      const quadtree = new QuadTree(bounds);
+      const visibleNodes = new Set();
+
+      // Process labels in order
+      for (const labelRect of labelRects) {
+        const collisions = quadtree.query(labelRect);
+        
+        if (collisions.length === 0) {
+          visibleNodes.add(labelRect.id);
+          quadtree.insert(labelRect);
+        }
+      }
+
+      return visibleNodes;
+    };
+  }, [truncateTitle]);
+
   // Custom node painting function
   const paintNode = useMemo(() => {
     return (node, ctx, globalScale) => {
       // Scale node size - divide by 2 to get radius and then apply a scaling factor
       const radius = (node.size / 2) * 0.15;
       
-      // Draw the node circle
+      // Draw node circle
       ctx.beginPath();
       ctx.arc(node.x, node.y, radius, 0, 2 * Math.PI);
       ctx.fillStyle = node.color;
       ctx.fill();
 
-      // Add text label if zoomed in enough
-      if (globalScale >= 1.2) {
+      // Only draw label if it's in the visible set and zoomed in enough
+      if (globalScale >= 1.2 && visibleLabels.has(node.id)) {
         const label = truncateTitle(node.title);
         ctx.font = `${12 / globalScale}px Arial`;
         ctx.textAlign = 'center';
@@ -78,7 +138,7 @@ const MovieNetworkGraph = () => {
         ctx.fillText(label, node.x, node.y + radius + 3 / globalScale);
       }
     };
-  }, []);
+  }, [truncateTitle, visibleLabels]); // Add visibleLabels to dependencies
 
   // Debug Panel Component
   const DebugPanel = () => (
@@ -151,6 +211,12 @@ const MovieNetworkGraph = () => {
           console.log('Node clicked:', node);
         }}
         onRenderFramePre={(ctx, globalScale) => {
+          // Update visible labels on each frame
+          if (graphData) {
+            const visible = checkLabelCollisions(graphData.nodes, ctx, globalScale);
+            setVisibleLabels(visible);
+          }
+          
           setDebugInfo(prev => ({
             ...prev,
             fps: ctx.constructor.name === 'CanvasRenderingContext2D' ? 60 : 0
