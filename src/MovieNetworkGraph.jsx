@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import ForceGraph2D from 'react-force-graph-2d';
 import movieNetwork from './processed_movie_network.json';
 
@@ -12,6 +12,12 @@ const MovieNetworkGraph = () => {
     fps: 0
   });
   const [showDebugPanel, setShowDebugPanel] = useState(true);
+
+  // Function to truncate movie titles
+  const truncateTitle = (title, maxLength = 15) => {
+    if (title.length <= maxLength) return title;
+    return title.slice(0, maxLength - 3) + '...';
+  };
 
   // Initialize graph data with console logging
   useEffect(() => {
@@ -34,6 +40,45 @@ const MovieNetworkGraph = () => {
       }));
     }
   }, [graphData]);
+
+  // Custom node painting function
+  const paintNode = useMemo(() => {
+    return (node, ctx, globalScale) => {
+      // Scale node size - divide by 2 to get radius and then apply a scaling factor
+      const radius = (node.size / 2) * 0.15;
+      
+      // Draw the node circle
+      ctx.beginPath();
+      ctx.arc(node.x, node.y, radius, 0, 2 * Math.PI);
+      ctx.fillStyle = node.color;
+      ctx.fill();
+
+      // Add text label if zoomed in enough
+      if (globalScale >= 1.2) {
+        const label = truncateTitle(node.title);
+        ctx.font = `${3 / globalScale}px Arial`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+        
+        // Add a background for better readability
+        const textWidth = ctx.measureText(label).width;
+        const padding = 2 / globalScale;
+        const textHeight = 4 / globalScale;
+        
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
+        ctx.fillRect(
+          node.x - textWidth / 2 - padding,
+          node.y + radius + 2 / globalScale,
+          textWidth + padding * 2,
+          textHeight + padding * 2
+        );
+        
+        // Draw the text
+        ctx.fillStyle = 'white';
+        ctx.fillText(label, node.x, node.y + radius + 3 / globalScale);
+      }
+    };
+  }, []);
 
   // Debug Panel Component
   const DebugPanel = () => (
@@ -96,6 +141,8 @@ const MovieNetworkGraph = () => {
         nodeColor="color"
         linkColor={() => 'rgba(255, 255, 255, 0.2)'}
         backgroundColor="#111827"
+        nodeCanvasObject={paintNode}
+        nodeCanvasObjectMode={() => 'replace'}
         onNodeHover={node => {
           setDebugInfo(prev => ({ ...prev, hoveredNode: node }));
         }}
