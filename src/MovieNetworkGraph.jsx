@@ -46,11 +46,11 @@ const MovieNetworkGraph = () => {
   const checkLabelCollisions = useMemo(() => {
     return (nodes, ctx, globalScale) => {
       if (globalScale < 1.2) return new Set();
-
+  
       // Find bounds of the graph
       let minX = Infinity, minY = Infinity;
       let maxX = -Infinity, maxY = -Infinity;
-
+  
       // First pass: calculate all label rectangles and graph bounds
       const labelRects = nodes.map(node => {
         const label = truncateTitle(node.title);
@@ -59,7 +59,7 @@ const MovieNetworkGraph = () => {
         const padding = 2 / globalScale;
         const textHeight = 4 / globalScale;
         const radius = (node.size / 2) * 0.15;
-
+  
         const rect = {
           id: node.id,
           x: node.x - textWidth / 2 - padding,
@@ -67,15 +67,15 @@ const MovieNetworkGraph = () => {
           width: textWidth + padding * 2,
           height: textHeight + padding * 2
         };
-
+  
         minX = Math.min(minX, rect.x);
         minY = Math.min(minY, rect.y);
         maxX = Math.max(maxX, rect.x + rect.width);
         maxY = Math.max(maxY, rect.y + rect.height);
-
+  
         return rect;
       });
-
+  
       // Create quadtree with graph bounds
       const bounds = {
         x: minX,
@@ -86,17 +86,33 @@ const MovieNetworkGraph = () => {
       
       const quadtree = new QuadTree(bounds);
       const visibleNodes = new Set();
-
-      // Process labels in order
+      const processedNodes = new Set(); // Keep track of nodes we've handled
+  
+      // Process all labels
       for (const labelRect of labelRects) {
+        // Skip if we've already processed this node
+        if (processedNodes.has(labelRect.id)) continue;
+  
+        // Find all collisions for this label
         const collisions = quadtree.query(labelRect);
         
         if (collisions.length === 0) {
+          // No collisions, add to visible set
           visibleNodes.add(labelRect.id);
           quadtree.insert(labelRect);
+        } else {
+          // If there are collisions, mark all involved nodes as processed
+          // and ensure none of them are visible
+          processedNodes.add(labelRect.id);
+          visibleNodes.delete(labelRect.id);
+          
+          for (const collision of collisions) {
+            processedNodes.add(collision.id);
+            visibleNodes.delete(collision.id);
+          }
         }
       }
-
+  
       return visibleNodes;
     };
   }, [truncateTitle]);
