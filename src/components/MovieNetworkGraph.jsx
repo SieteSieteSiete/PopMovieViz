@@ -8,29 +8,28 @@ import ShowDebugButton from './debug/ShowDebugButton';
 import { useGraphData } from '../hooks/useGraphData';
 import { useDebugInfo } from '../hooks/useDebugInfo';
 import { useLabelManagement } from '../hooks/useLabelManagement';
+import { ZOOM, COLORS, LABEL, NODE, DEBUG } from '../constants';
 
-const ZOOM_THRESHOLD = 1.5;
-
-const MovieNetworkGraph = ({ initialShowDebug = true }) => {
+const MovieNetworkGraph = ({ initialShowDebug = DEBUG.INITIAL_SHOW_PANEL }) => {
   const [graphData, setGraphData] = useGraphData(movieNetwork);
   const [debugInfo, updateDebugInfo] = useDebugInfo({
     nodeCount: movieNetwork?.graph?.nodes?.length || 0,
     linkCount: movieNetwork?.graph?.links?.length || 0
   });
   const [showDebugPanel, setShowDebugPanel] = useState(initialShowDebug);
-  const [showDebugOverlay, setShowDebugOverlay] = useState(true);
+  const [showDebugOverlay, setShowDebugOverlay] = useState(DEBUG.INITIAL_SHOW_OVERLAY);
   
   const {
     visibleLabels,
     labelRects,
     truncateTitle,
     updateLabelVisibility
-  } = useLabelManagement(ZOOM_THRESHOLD);
+  } = useLabelManagement(ZOOM.THRESHOLD);
 
   // Node painting function
   const paintNode = useMemo(() => {
     return (node, ctx, globalScale) => {
-      const radius = (node.size / 2) * 0.15;
+      const radius = (node.size / 2) * NODE.SIZE_SCALE;
       
       // Draw node
       ctx.beginPath();
@@ -39,33 +38,39 @@ const MovieNetworkGraph = ({ initialShowDebug = true }) => {
       ctx.fill();
 
       // Draw label if visible and zoomed in enough
-      if (globalScale >= ZOOM_THRESHOLD && visibleLabels.has(node.id)) {
+      if (globalScale >= ZOOM.THRESHOLD && visibleLabels.has(node.id)) {
         const label = truncateTitle(node.title);
-        ctx.font = `${12 / globalScale}px Arial`;
+        ctx.font = `${LABEL.FONT.SIZE / globalScale}px ${LABEL.FONT.FAMILY}`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'top';
         
         const textWidth = ctx.measureText(label).width;
-        const padding = 2 / globalScale;
-        const textHeight = 4 / globalScale;
+        const padding = LABEL.PADDING / globalScale;
+        const textHeight = LABEL.HEIGHT / globalScale;
         
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
+        ctx.fillStyle = COLORS.LABEL_BACKGROUND;
         ctx.fillRect(
           node.x - textWidth / 2 - padding,
-          node.y + radius + 2 / globalScale,
+          node.y + radius + LABEL.VERTICAL_OFFSET / globalScale,
           textWidth + padding * 2,
           textHeight + padding * 2
         );
         
-        ctx.fillStyle = 'white';
-        ctx.fillText(label, node.x, node.y + radius + 3 / globalScale);
+        ctx.fillStyle = COLORS.LABEL_TEXT;
+        ctx.fillText(
+          label, 
+          node.x, 
+          node.y + radius + (LABEL.VERTICAL_OFFSET + 1) / globalScale
+        );
       }
 
       // Draw debug overlay
-      if (showDebugPanel && showDebugOverlay && globalScale >= ZOOM_THRESHOLD) {
+      if (showDebugPanel && showDebugOverlay && globalScale >= ZOOM.THRESHOLD) {
         const rect = labelRects.find(r => r.id === node.id);
         if (rect) {
-          ctx.strokeStyle = rect.collides ? 'rgba(255, 0, 0, 0.5)' : 'rgba(0, 255, 0, 0.5)';
+          ctx.strokeStyle = rect.collides 
+            ? COLORS.DEBUG_COLLISION.COLLIDING 
+            : COLORS.DEBUG_COLLISION.NOT_COLLIDING;
           ctx.lineWidth = 1 / globalScale;
           ctx.strokeRect(
             rect.x,
@@ -93,8 +98,8 @@ const MovieNetworkGraph = ({ initialShowDebug = true }) => {
         nodeId="id"
         nodeLabel="title"
         nodeColor="color"
-        linkColor={() => 'rgba(255, 255, 255, 0.2)'}
-        backgroundColor="#111827"
+        linkColor={() => COLORS.LINK}
+        backgroundColor={COLORS.BACKGROUND}
         nodeCanvasObject={paintNode}
         nodeCanvasObjectMode={() => 'replace'}
         onNodeHover={node => {
