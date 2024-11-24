@@ -1,4 +1,6 @@
 // src/components/debug/DebugPanel.jsx
+import PropTypes from 'prop-types';
+
 const DebugPanel = ({ debugInfo, onClose, showOverlay, onToggleOverlay }) => (
   <div className="fixed top-0 right-0 bg-gray-900/90 text-gray-200 p-4 m-4 rounded-lg shadow-lg font-mono text-sm border border-gray-700">
     <div className="flex justify-between items-center mb-2">
@@ -46,5 +48,35 @@ const DebugPanel = ({ debugInfo, onClose, showOverlay, onToggleOverlay }) => (
     </div>
   </div>
 );
+
+DebugPanel.propTypes = {
+  debugInfo: PropTypes.shape({
+    hoveredNode: PropTypes.shape({
+      id: PropTypes.string,
+      title: PropTypes.string,
+      year: PropTypes.string,
+      popularity: PropTypes.number,
+      size: PropTypes.number,
+      color: PropTypes.string,
+    }),
+    selectedNode: PropTypes.shape({
+      id: PropTypes.string,
+      title: PropTypes.string,
+      year: PropTypes.string,
+      popularity: PropTypes.number,
+      size: PropTypes.number,
+      color: PropTypes.string,
+    }),
+    nodeCount: PropTypes.number.isRequired,
+    linkCount: PropTypes.number.isRequired,
+    fps: PropTypes.number.isRequired,
+    visibleLabelsCount: PropTypes.number.isRequired,
+    totalLabels: PropTypes.number.isRequired,
+    collidingLabels: PropTypes.number.isRequired,
+  }).isRequired,
+  onClose: PropTypes.func.isRequired,
+  showOverlay: PropTypes.bool.isRequired,
+  onToggleOverlay: PropTypes.func.isRequired,
+};
 
 export default DebugPanel;

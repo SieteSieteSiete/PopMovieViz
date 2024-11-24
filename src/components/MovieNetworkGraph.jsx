@@ -1,6 +1,8 @@
+// src/components/MovieNetworkGraph.jsx
+import PropTypes from 'prop-types';
 import { useState, useEffect, useMemo } from 'react';
 import ForceGraph2D from 'react-force-graph-2d';
-import movieNetwork from '../processed_movie_network.json';
+import movieNetwork from '../data/processed_movie_network.json';
 import { LabelCollisionDetector } from '../utils/LabelCollisionDetector';
 import DebugPanel from './debug/DebugPanel';
 import ShowDebugButton from './debug/ShowDebugButton';
@@ -161,6 +163,10 @@ const MovieNetworkGraph = () => {
       )}
     </div>
   );
+};
+
+MovieNetworkGraph.propTypes = {
+  initialShowDebug: PropTypes.bool,
 };
 
 export default MovieNetworkGraph;
