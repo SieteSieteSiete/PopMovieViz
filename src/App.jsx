@@ -1,4 +1,4 @@
-import MovieNetworkGraph from './MovieNetworkGraph'
+import MovieNetworkGraph from './components/MovieNetworkGraph'
 
 function App() {
   return (
