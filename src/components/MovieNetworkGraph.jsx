@@ -4,7 +4,6 @@ import movieNetwork from '../processed_movie_network.json';
 import { LabelCollisionDetector } from '../utils/LabelCollisionDetector';
 import DebugPanel from './debug/DebugPanel';
 import ShowDebugButton from './debug/ShowDebugButton';
-import DebugOverlay from './debug/DebugOverlay';
 
 // Move zoom threshold to a constant for easy modification
 const ZOOM_THRESHOLD = 1.5;
