@@ -1,53 +1,31 @@
 // src/components/MovieNetworkGraph.jsx
 import PropTypes from 'prop-types';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import ForceGraph2D from 'react-force-graph-2d';
 import movieNetwork from '../data/processed_movie_network.json';
-import { LabelCollisionDetector } from '../utils/LabelCollisionDetector';
 import DebugPanel from './debug/DebugPanel';
 import ShowDebugButton from './debug/ShowDebugButton';
+import { useGraphData } from '../hooks/useGraphData';
+import { useDebugInfo } from '../hooks/useDebugInfo';
+import { useLabelManagement } from '../hooks/useLabelManagement';
 
-// Move zoom threshold to a constant for easy modification
 const ZOOM_THRESHOLD = 1.5;
 
-const MovieNetworkGraph = () => {
-  const [graphData, setGraphData] = useState(null);
-  const [debugInfo, setDebugInfo] = useState({
-    hoveredNode: null,
-    selectedNode: null,
-    nodeCount: 0,
-    linkCount: 0,
-    fps: 0,
-    visibleLabelsCount: 0,
-    totalLabels: 0,
-    collidingLabels: 0
+const MovieNetworkGraph = ({ initialShowDebug = true }) => {
+  const [graphData, setGraphData] = useGraphData(movieNetwork);
+  const [debugInfo, updateDebugInfo] = useDebugInfo({
+    nodeCount: movieNetwork?.graph?.nodes?.length || 0,
+    linkCount: movieNetwork?.graph?.links?.length || 0
   });
-  const [showDebugPanel, setShowDebugPanel] = useState(true);
+  const [showDebugPanel, setShowDebugPanel] = useState(initialShowDebug);
   const [showDebugOverlay, setShowDebugOverlay] = useState(true);
-  const [visibleLabels, setVisibleLabels] = useState(new Set());
-  const [labelRects, setLabelRects] = useState([]);
-
-  // Function to truncate movie titles
-  const truncateTitle = (title, maxLength = 15) => {
-    if (title.length <= maxLength) return title;
-    return title.slice(0, maxLength - 3) + '...';
-  };
-
-  // Initialize graph data
-  useEffect(() => {
-    if (!graphData && movieNetwork?.graph) {
-      setGraphData({
-        nodes: movieNetwork.graph.nodes,
-        links: movieNetwork.graph.links
-      });
-
-      setDebugInfo(prev => ({
-        ...prev,
-        nodeCount: movieNetwork.graph.nodes.length,
-        linkCount: movieNetwork.graph.links.length
-      }));
-    }
-  }, [graphData]);
+  
+  const {
+    visibleLabels,
+    labelRects,
+    truncateTitle,
+    updateLabelVisibility
+  } = useLabelManagement(ZOOM_THRESHOLD);
 
   // Node painting function
   const paintNode = useMemo(() => {
@@ -83,7 +61,7 @@ const MovieNetworkGraph = () => {
         ctx.fillText(label, node.x, node.y + radius + 3 / globalScale);
       }
 
-      // Draw debug overlay for this node if enabled
+      // Draw debug overlay
       if (showDebugPanel && showDebugOverlay && globalScale >= ZOOM_THRESHOLD) {
         const rect = labelRects.find(r => r.id === node.id);
         if (rect) {
@@ -98,7 +76,7 @@ const MovieNetworkGraph = () => {
         }
       }
     };
-  }, [truncateTitle, visibleLabels, showDebugPanel, showDebugOverlay, labelRects]);
+  }, [visibleLabels, showDebugPanel, showDebugOverlay, labelRects, truncateTitle]);
 
   if (!graphData) {
     return (
@@ -120,32 +98,20 @@ const MovieNetworkGraph = () => {
         nodeCanvasObject={paintNode}
         nodeCanvasObjectMode={() => 'replace'}
         onNodeHover={node => {
-          setDebugInfo(prev => ({ ...prev, hoveredNode: node }));
+          updateDebugInfo({ hoveredNode: node });
         }}
         onNodeClick={node => {
-          setDebugInfo(prev => ({ ...prev, selectedNode: node }));
+          updateDebugInfo({ selectedNode: node });
         }}
         onRenderFramePre={(ctx, globalScale) => {
           if (graphData) {
-            const { visibleNodes, labelRects: newLabelRects } = 
-              LabelCollisionDetector.calculateLabelRects(
-                graphData.nodes, 
-                ctx, 
-                globalScale, 
-                truncateTitle,
-                ZOOM_THRESHOLD
-              );
-            setVisibleLabels(visibleNodes);
-            setLabelRects(newLabelRects);
-            
-            // Update debug info
-            setDebugInfo(prev => ({
-              ...prev,
-              visibleLabelsCount: visibleNodes.size,
-              totalLabels: newLabelRects.length,
-              collidingLabels: newLabelRects.filter(r => r.collides).length,
-              fps: ctx.constructor.name === 'CanvasRenderingContext2D' ? 60 : 0
-            }));
+            const labelStats = updateLabelVisibility(graphData.nodes, ctx, globalScale);
+            if (labelStats) {
+              updateDebugInfo({
+                ...labelStats,
+                fps: ctx.constructor.name === 'CanvasRenderingContext2D' ? 60 : 0
+              });
+            }
           }
         }}
       />
