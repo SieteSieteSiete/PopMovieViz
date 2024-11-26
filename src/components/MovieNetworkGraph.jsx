@@ -8,6 +8,7 @@ import ShowDebugButton from './debug/ShowDebugButton';
 import { useGraphData } from '../hooks/useGraphData';
 import { useDebugInfo } from '../hooks/useDebugInfo';
 import { useLabelManagement } from '../hooks/useLabelManagement';
+import { createForceGraphConfig } from '../config/forceGraphConfig';
 import { ZOOM, COLORS, LABEL, NODE, DEBUG } from '../constants';
 
 const MovieNetworkGraph = ({ initialShowDebug = DEBUG.INITIAL_SHOW_PANEL }) => {
@@ -83,6 +84,27 @@ const MovieNetworkGraph = ({ initialShowDebug = DEBUG.INITIAL_SHOW_PANEL }) => {
     };
   }, [visibleLabels, showDebugPanel, showDebugOverlay, labelRects, truncateTitle]);
 
+  const graphConfig = useMemo(() => createForceGraphConfig({
+    paintNode,
+    onNodeHover: node => {
+      updateDebugInfo({ hoveredNode: node });
+    },
+    onNodeClick: node => {
+      updateDebugInfo({ selectedNode: node });
+    },
+    onRenderFramePre: (ctx, globalScale) => {
+      if (graphData) {
+        const labelStats = updateLabelVisibility(graphData.nodes, ctx, globalScale);
+        if (labelStats) {
+          updateDebugInfo({
+            ...labelStats,
+            fps: ctx.constructor.name === 'CanvasRenderingContext2D' ? 60 : 0
+          });
+        }
+      }
+    }
+  }), [paintNode, graphData, updateDebugInfo, updateLabelVisibility]);
+
   if (!graphData) {
     return (
       <div className="w-full h-screen bg-gray-900 text-gray-200 flex items-center justify-center">
@@ -95,30 +117,7 @@ const MovieNetworkGraph = ({ initialShowDebug = DEBUG.INITIAL_SHOW_PANEL }) => {
     <div className="w-full h-screen bg-gray-900">
       <ForceGraph2D
         graphData={graphData}
-        nodeId="id"
-        nodeLabel="title"
-        nodeColor="color"
-        linkColor={() => COLORS.LINK}
-        backgroundColor={COLORS.BACKGROUND}
-        nodeCanvasObject={paintNode}
-        nodeCanvasObjectMode={() => 'replace'}
-        onNodeHover={node => {
-          updateDebugInfo({ hoveredNode: node });
-        }}
-        onNodeClick={node => {
-          updateDebugInfo({ selectedNode: node });
-        }}
-        onRenderFramePre={(ctx, globalScale) => {
-          if (graphData) {
-            const labelStats = updateLabelVisibility(graphData.nodes, ctx, globalScale);
-            if (labelStats) {
-              updateDebugInfo({
-                ...labelStats,
-                fps: ctx.constructor.name === 'CanvasRenderingContext2D' ? 60 : 0
-              });
-            }
-          }
-        }}
+        {...graphConfig}
       />
       {showDebugPanel ? (
         <DebugPanel 
