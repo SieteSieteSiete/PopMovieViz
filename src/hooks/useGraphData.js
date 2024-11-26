@@ -32,19 +32,40 @@ import PropTypes from 'prop-types';
  * @param {Object} initialData - Initial graph data
  * @returns {[GraphData, Function]} Graph data and setter
  */
+
 export const useGraphData = (initialData) => {
   const [graphData, setGraphData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!graphData && initialData?.graph) {
-      setGraphData({
-        nodes: initialData.graph.nodes,
-        links: initialData.graph.links
-      });
-    }
-  }, [graphData, initialData]);
+    const loadData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
 
-  return [graphData, setGraphData];
+        if (!initialData?.graph) {
+          throw new Error('Invalid or missing graph data');
+        }
+
+        // Simulate network delay for demonstration
+        await new Promise(resolve => setTimeout(resolve, 1500));
+
+        setGraphData({
+          nodes: initialData.graph.nodes,
+          links: initialData.graph.links
+        });
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
+  }, [initialData]);
+
+  return [graphData, setGraphData, loading, error];
 };
 
 useGraphData.propTypes = {

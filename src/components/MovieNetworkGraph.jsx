@@ -1,11 +1,13 @@
 // src/components/MovieNetworkGraph.jsx
 import PropTypes from 'prop-types';
-import { useState, useMemo, useCallback, memo } from 'react';
+import { useState, useMemo, useCallback, memo, useEffect } from 'react';
 import ForceGraph2D from 'react-force-graph-2d';
 import movieNetwork from '../data/processed_movie_network.json';
 import DebugPanel from './debug/DebugPanel';
 import ShowDebugButton from './debug/ShowDebugButton';
 import ErrorBoundary from './ErrorBoundary';
+import LoadingState from './common/LoadingState';
+import ErrorDisplay from './common/ErrorDisplay';
 import { useGraphData } from '../hooks/useGraphData';
 import { useDebugInfo } from '../hooks/useDebugInfo';
 import { useLabelManagement } from '../hooks/useLabelManagement';
@@ -17,14 +19,11 @@ const GraphVisualization = memo(({
   debugInfo, 
   showDebugPanel, 
   showDebugOverlay, 
+  isProcessing,
   ...props 
 }) => {
-  if (!graphData) {
-    return (
-      <div className="w-full h-screen bg-gray-900 text-gray-200 flex items-center justify-center">
-        Loading...
-      </div>
-    );
+  if (isProcessing) {
+    return <LoadingState type="processing" />;
   }
 
   return (
@@ -56,19 +55,23 @@ GraphVisualization.propTypes = {
   debugInfo: PropTypes.object.isRequired,
   showDebugPanel: PropTypes.bool.isRequired,
   showDebugOverlay: PropTypes.bool.isRequired,
+  isProcessing: PropTypes.bool.isRequired,
   onCloseDebug: PropTypes.func.isRequired,
   onShowDebug: PropTypes.func.isRequired,
   onToggleOverlay: PropTypes.func.isRequired,
 };
 
 const MovieNetworkGraph = ({ initialShowDebug = DEBUG.INITIAL_SHOW_PANEL }) => {
-  const [graphData, setGraphData] = useGraphData(movieNetwork);
+  const [graphData, setGraphData, loading, error] = useGraphData(movieNetwork);
   const [debugInfo, updateDebugInfo] = useDebugInfo({
     nodeCount: movieNetwork?.graph?.nodes?.length || 0,
     linkCount: movieNetwork?.graph?.links?.length || 0
   });
+  
   const [showDebugPanel, setShowDebugPanel] = useState(initialShowDebug);
   const [showDebugOverlay, setShowDebugOverlay] = useState(DEBUG.INITIAL_SHOW_OVERLAY);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [renderError, setRenderError] = useState(null);
   
   const {
     visibleLabels,
@@ -81,10 +84,17 @@ const MovieNetworkGraph = ({ initialShowDebug = DEBUG.INITIAL_SHOW_PANEL }) => {
     setGraphData(null);
     setShowDebugPanel(initialShowDebug);
     setShowDebugOverlay(DEBUG.INITIAL_SHOW_OVERLAY);
+    setRenderError(null);
+    setIsProcessing(true);
+    
+    // Simulate processing time for demonstration
+    setTimeout(() => {
     setGraphData({
       nodes: movieNetwork.graph.nodes,
       links: movieNetwork.graph.links
     });
+      setIsProcessing(false);
+    }, 1000);
   }, [initialShowDebug, setGraphData]);
 
   const handleNodeHover = useCallback(node => {
@@ -175,6 +185,34 @@ const MovieNetworkGraph = ({ initialShowDebug = DEBUG.INITIAL_SHOW_PANEL }) => {
     onRenderFramePre: handleRenderFramePre
   }), [paintNode, handleNodeHover, handleNodeClick, handleRenderFramePre]);
 
+  if (loading) {
+    return <LoadingState type="initial" />;
+  }
+
+  if (error) {
+    return (
+      <ErrorDisplay
+        title="Failed to Load Data"
+        message="Unable to load the movie network data. Please try again."
+        error={error}
+        onRetry={handleReset}
+        showDetails={process.env.NODE_ENV === 'development'}
+      />
+    );
+  }
+
+  if (renderError) {
+    return (
+      <ErrorDisplay
+        title="Visualization Error"
+        message="There was an error rendering the movie network visualization."
+        error={renderError}
+        onRetry={handleReset}
+        showDetails={process.env.NODE_ENV === 'development'}
+      />
+    );
+  }
+
   return (
     <div className="w-full h-screen bg-gray-900">
       <ErrorBoundary
@@ -187,6 +225,7 @@ const MovieNetworkGraph = ({ initialShowDebug = DEBUG.INITIAL_SHOW_PANEL }) => {
           debugInfo={debugInfo}
           showDebugPanel={showDebugPanel}
           showDebugOverlay={showDebugOverlay}
+          isProcessing={isProcessing}
           onCloseDebug={handleCloseDebug}
           onShowDebug={handleShowDebug}
           onToggleOverlay={handleToggleOverlay}
