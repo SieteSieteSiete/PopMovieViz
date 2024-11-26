@@ -1,7 +1,48 @@
 // src/components/debug/DebugPanel.jsx
 import PropTypes from 'prop-types';
+import { memo } from 'react';
 
-const DebugPanel = ({ debugInfo, onClose, showOverlay, onToggleOverlay }) => (
+const HoveredNodeInfo = memo(({ node }) => (
+  <div className="mt-2 p-2 bg-gray-800 rounded border border-gray-700">
+    <p>Hovered Node:</p>
+    <pre className="text-xs">
+      {JSON.stringify(node, null, 2)}
+    </pre>
+  </div>
+));
+
+HoveredNodeInfo.propTypes = {
+  node: PropTypes.shape({
+    id: PropTypes.string,
+    title: PropTypes.string,
+    year: PropTypes.string,
+    popularity: PropTypes.number,
+    size: PropTypes.number,
+    color: PropTypes.string,
+  }).isRequired,
+};
+
+const SelectedNodeInfo = memo(({ node }) => (
+  <div className="mt-2 p-2 bg-gray-800 rounded border border-gray-700">
+    <p>Selected Node:</p>
+    <pre className="text-xs">
+      {JSON.stringify(node, null, 2)}
+    </pre>
+  </div>
+));
+
+SelectedNodeInfo.propTypes = {
+  node: PropTypes.shape({
+    id: PropTypes.string,
+    title: PropTypes.string,
+    year: PropTypes.string,
+    popularity: PropTypes.number,
+    size: PropTypes.number,
+    color: PropTypes.string,
+  }).isRequired,
+};
+
+const DebugPanel = memo(({ debugInfo, onClose, showOverlay, onToggleOverlay }) => (
   <div className="fixed top-0 right-0 bg-gray-900/90 text-gray-200 p-4 m-4 rounded-lg shadow-lg font-mono text-sm border border-gray-700">
     <div className="flex justify-between items-center mb-2">
       <h3 className="font-bold">Debug Panel</h3>
@@ -29,25 +70,11 @@ const DebugPanel = ({ debugInfo, onClose, showOverlay, onToggleOverlay }) => (
       <p>Visible Labels: {debugInfo.visibleLabelsCount}</p>
       <p>Total Labels: {debugInfo.totalLabels}</p>
       <p>Colliding Labels: {debugInfo.collidingLabels}</p>
-      {debugInfo.hoveredNode && (
-        <div className="mt-2 p-2 bg-gray-800 rounded border border-gray-700">
-          <p>Hovered Node:</p>
-          <pre className="text-xs">
-            {JSON.stringify(debugInfo.hoveredNode, null, 2)}
-          </pre>
-        </div>
-      )}
-      {debugInfo.selectedNode && (
-        <div className="mt-2 p-2 bg-gray-800 rounded border border-gray-700">
-          <p>Selected Node:</p>
-          <pre className="text-xs">
-            {JSON.stringify(debugInfo.selectedNode, null, 2)}
-          </pre>
-        </div>
-      )}
+      {debugInfo.hoveredNode && <HoveredNodeInfo node={debugInfo.hoveredNode} />}
+      {debugInfo.selectedNode && <SelectedNodeInfo node={debugInfo.selectedNode} />}
     </div>
   </div>
-);
+));
 
 DebugPanel.propTypes = {
   debugInfo: PropTypes.shape({

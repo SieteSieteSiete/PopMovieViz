@@ -1,15 +1,65 @@
 // src/components/MovieNetworkGraph.jsx
 import PropTypes from 'prop-types';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback, memo } from 'react';
 import ForceGraph2D from 'react-force-graph-2d';
 import movieNetwork from '../data/processed_movie_network.json';
 import DebugPanel from './debug/DebugPanel';
 import ShowDebugButton from './debug/ShowDebugButton';
+import ErrorBoundary from './ErrorBoundary';
 import { useGraphData } from '../hooks/useGraphData';
 import { useDebugInfo } from '../hooks/useDebugInfo';
 import { useLabelManagement } from '../hooks/useLabelManagement';
 import { createForceGraphConfig } from '../config/forceGraphConfig';
 import { ZOOM, COLORS, LABEL, NODE, DEBUG } from '../constants';
+
+const GraphVisualization = memo(({ 
+  graphData, 
+  debugInfo, 
+  showDebugPanel, 
+  showDebugOverlay, 
+  ...props 
+}) => {
+  if (!graphData) {
+    return (
+      <div className="w-full h-screen bg-gray-900 text-gray-200 flex items-center justify-center">
+        Loading...
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <ForceGraph2D
+        graphData={graphData}
+        {...props}
+      />
+      {showDebugPanel ? (
+        <DebugPanel 
+          debugInfo={debugInfo} 
+          onClose={props.onCloseDebug}
+          showOverlay={showDebugOverlay}
+          onToggleOverlay={props.onToggleOverlay}
+        />
+      ) : (
+        <ShowDebugButton 
+          onShow={props.onShowDebug}
+        />
+      )}
+    </>
+  );
+});
+
+GraphVisualization.displayName = 'GraphVisualization';
+
+GraphVisualization.propTypes = {
+  graphData: PropTypes.object,
+  debugInfo: PropTypes.object.isRequired,
+  showDebugPanel: PropTypes.bool.isRequired,
+  showDebugOverlay: PropTypes.bool.isRequired,
+  onCloseDebug: PropTypes.func.isRequired,
+  onShowDebug: PropTypes.func.isRequired,
+  onToggleOverlay: PropTypes.func.isRequired,
+};
 
 const MovieNetworkGraph = ({ initialShowDebug = DEBUG.INITIAL_SHOW_PANEL }) => {
   const [graphData, setGraphData] = useGraphData(movieNetwork);
@@ -27,7 +77,41 @@ const MovieNetworkGraph = ({ initialShowDebug = DEBUG.INITIAL_SHOW_PANEL }) => {
     updateLabelVisibility
   } = useLabelManagement(ZOOM.THRESHOLD);
 
-  // Node painting function
+  const handleReset = useCallback(() => {
+    setGraphData(null);
+    setShowDebugPanel(initialShowDebug);
+    setShowDebugOverlay(DEBUG.INITIAL_SHOW_OVERLAY);
+    setGraphData({
+      nodes: movieNetwork.graph.nodes,
+      links: movieNetwork.graph.links
+    });
+  }, [initialShowDebug, setGraphData]);
+
+  const handleNodeHover = useCallback(node => {
+    updateDebugInfo({ hoveredNode: node });
+  }, [updateDebugInfo]);
+
+  const handleNodeClick = useCallback(node => {
+    updateDebugInfo({ selectedNode: node });
+  }, [updateDebugInfo]);
+
+  const handleRenderFramePre = useCallback((ctx, globalScale) => {
+    if (graphData) {
+      const labelStats = updateLabelVisibility(graphData.nodes, ctx, globalScale);
+      if (labelStats) {
+        updateDebugInfo({
+          ...labelStats,
+          fps: ctx.constructor.name === 'CanvasRenderingContext2D' ? 60 : 0
+        });
+      }
+    }
+  }, [graphData, updateLabelVisibility, updateDebugInfo]);
+
+  const handleCloseDebug = useCallback(() => setShowDebugPanel(false), []);
+  const handleShowDebug = useCallback(() => setShowDebugPanel(true), []);
+  const handleToggleOverlay = useCallback(() => setShowDebugOverlay(prev => !prev), []);
+
+  // Memoize paintNode function
   const paintNode = useMemo(() => {
     return (node, ctx, globalScale) => {
       const radius = (node.size / 2) * NODE.SIZE_SCALE;
@@ -86,51 +170,29 @@ const MovieNetworkGraph = ({ initialShowDebug = DEBUG.INITIAL_SHOW_PANEL }) => {
 
   const graphConfig = useMemo(() => createForceGraphConfig({
     paintNode,
-    onNodeHover: node => {
-      updateDebugInfo({ hoveredNode: node });
-    },
-    onNodeClick: node => {
-      updateDebugInfo({ selectedNode: node });
-    },
-    onRenderFramePre: (ctx, globalScale) => {
-      if (graphData) {
-        const labelStats = updateLabelVisibility(graphData.nodes, ctx, globalScale);
-        if (labelStats) {
-          updateDebugInfo({
-            ...labelStats,
-            fps: ctx.constructor.name === 'CanvasRenderingContext2D' ? 60 : 0
-          });
-        }
-      }
-    }
-  }), [paintNode, graphData, updateDebugInfo, updateLabelVisibility]);
-
-  if (!graphData) {
-    return (
-      <div className="w-full h-screen bg-gray-900 text-gray-200 flex items-center justify-center">
-        Loading...
-      </div>
-    );
-  }
+    onNodeHover: handleNodeHover,
+    onNodeClick: handleNodeClick,
+    onRenderFramePre: handleRenderFramePre
+  }), [paintNode, handleNodeHover, handleNodeClick, handleRenderFramePre]);
 
   return (
     <div className="w-full h-screen bg-gray-900">
-      <ForceGraph2D
-        graphData={graphData}
-        {...graphConfig}
-      />
-      {showDebugPanel ? (
-        <DebugPanel 
-          debugInfo={debugInfo} 
-          onClose={() => setShowDebugPanel(false)}
-          showOverlay={showDebugOverlay}
-          onToggleOverlay={() => setShowDebugOverlay(!showDebugOverlay)}
+      <ErrorBoundary
+        title="Visualization Error"
+        message="There was an error rendering the movie network visualization"
+        onReset={handleReset}
+      >
+        <GraphVisualization
+          graphData={graphData}
+          debugInfo={debugInfo}
+          showDebugPanel={showDebugPanel}
+          showDebugOverlay={showDebugOverlay}
+          onCloseDebug={handleCloseDebug}
+          onShowDebug={handleShowDebug}
+          onToggleOverlay={handleToggleOverlay}
+          {...graphConfig}
         />
-      ) : (
-        <ShowDebugButton 
-          onShow={() => setShowDebugPanel(true)} 
-        />
-      )}
+      </ErrorBoundary>
     </div>
   );
 };
