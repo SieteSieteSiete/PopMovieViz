@@ -194,25 +194,29 @@ const MovieNetworkGraph = ({ initialShowDebug = DEBUG.INITIAL_SHOW_PANEL }) => {
 
   if (error) {
     return (
-      <ErrorDisplay
-        title="Failed to Load Data"
-        message="Unable to load the movie network data. Please try again."
-        error={error}
-        onRetry={handleReset}
-        showDetails={process.env.NODE_ENV === 'development'}
-      />
+      <div className="w-screen h-screen relative">
+        <ErrorDisplay
+          title="Failed to Load Data"
+          message="Unable to load the movie network data. Please try again."
+          error={error}
+          onRetry={handleReset}
+          showDetails={process.env.NODE_ENV === 'development'}
+        />
+      </div>
     );
   }
 
   if (renderError) {
     return (
-      <ErrorDisplay
-        title="Visualization Error"
-        message="There was an error rendering the movie network visualization."
-        error={renderError}
-        onRetry={handleReset}
-        showDetails={process.env.NODE_ENV === 'development'}
-      />
+      <div className="w-screen h-screen relative">
+        <ErrorDisplay
+          title="Visualization Error"
+          message="There was an error rendering the movie network visualization."
+          error={renderError}
+          onRetry={handleReset}
+          showDetails={process.env.NODE_ENV === 'development'}
+        />
+      </div>
     );
   }
 
