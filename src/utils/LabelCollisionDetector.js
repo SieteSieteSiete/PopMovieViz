@@ -1,10 +1,11 @@
 // src/utils/LabelCollisionDetector.js
 import { QuadTree } from './QuadTree';
-import { LABEL, NODE } from '../constants';
+import { LABEL, NODE, ZOOM } from '../constants';
+import { wrapText } from './textWrapper';
 
 export class LabelCollisionDetector {
-  static calculateLabelRects(nodes, ctx, globalScale, truncateTitle, zoomThreshold) {
-    if (globalScale < zoomThreshold) return { visibleNodes: new Set(), labelRects: [] };
+  static calculateLabelRects(nodes, ctx, globalScale) {
+    if (globalScale < ZOOM.THRESHOLD) return { visibleNodes: new Set(), labelRects: [] };
 
     // Find bounds of the graph
     let minX = Infinity, minY = Infinity;
@@ -12,19 +13,29 @@ export class LabelCollisionDetector {
 
     // Calculate all label rectangles and graph bounds
     const labelRects = nodes.map(node => {
-      const label = truncateTitle(node.title);
-      ctx.font = `${LABEL.FONT.SIZE / globalScale}px ${LABEL.FONT.FAMILY}`;
-      const textWidth = ctx.measureText(label).width;
-      const padding = LABEL.PADDING / globalScale;
-      const textHeight = LABEL.HEIGHT / globalScale;
+      const fontSize = LABEL.FONT.SIZE / globalScale;
+      const lineHeight = LABEL.FONT.LINE_HEIGHT / globalScale;
+      const hPadding = LABEL.PADDING.HORIZONTAL / globalScale;
+      const topPadding = LABEL.PADDING.TOP / globalScale;
+      const bottomPadding = LABEL.PADDING.BOTTOM / globalScale;
+      
+      ctx.font = `${fontSize}px ${LABEL.FONT.FAMILY}`;
+      
+      // Get wrapped lines
+      const maxWidth = LABEL.MAX_WIDTH / globalScale;
+      const lines = wrapText(ctx, node.title, maxWidth);
+      
       const radius = (node.size / 2) * NODE.SIZE_SCALE;
+      const maxLineWidth = Math.max(...lines.map(line => ctx.measureText(line).width));
+      const totalHeight = (lines.length * lineHeight) + topPadding + bottomPadding;
+      const totalWidth = maxLineWidth + (hPadding * 2);
 
       const rect = {
         id: node.id,
-        x: node.x - textWidth / 2 - padding,
+        x: node.x - totalWidth / 2,
         y: node.y + radius + LABEL.VERTICAL_OFFSET / globalScale,
-        width: textWidth + padding * 2,
-        height: textHeight + padding * 2,
+        width: totalWidth,
+        height: totalHeight,
         collides: false
       };
 

@@ -1,6 +1,6 @@
 // src/components/MovieNetworkGraph.jsx
-import PropTypes from 'prop-types';
 import { useState, useMemo, useCallback, memo, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import ForceGraph2D from 'react-force-graph-2d';
 import movieNetwork from '../data/processed_movie_network.json';
 import DebugPanel from './debug/DebugPanel';
@@ -13,6 +13,7 @@ import { useDebugInfo } from '../hooks/useDebugInfo';
 import { useLabelManagement } from '../hooks/useLabelManagement';
 import { createForceGraphConfig } from '../config/forceGraphConfig';
 import { ZOOM, COLORS, LABEL, NODE, DEBUG } from '../constants';
+import { wrapText } from '../utils/textWrapper';
 
 const GraphVisualization = memo(({ 
   graphData, 
@@ -134,32 +135,46 @@ const MovieNetworkGraph = ({ initialShowDebug = DEBUG.INITIAL_SHOW_PANEL }) => {
 
       // Draw label if visible and zoomed in enough
       if (globalScale >= ZOOM.THRESHOLD && visibleLabels.has(node.id)) {
-        const label = truncateTitle(node.title);
-        ctx.font = `${LABEL.FONT.SIZE / globalScale}px ${LABEL.FONT.FAMILY}`;
+        const fontSize = LABEL.FONT.SIZE / globalScale;
+        const lineHeight = LABEL.FONT.LINE_HEIGHT / globalScale;
+        const hPadding = LABEL.PADDING.HORIZONTAL / globalScale;
+        const topPadding = LABEL.PADDING.TOP / globalScale;
+        const bottomPadding = LABEL.PADDING.BOTTOM / globalScale;
+        
+        ctx.font = `${fontSize}px ${LABEL.FONT.FAMILY}`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'top';
         
-        const textWidth = ctx.measureText(label).width;
-        const padding = LABEL.PADDING / globalScale;
-        const textHeight = LABEL.HEIGHT / globalScale;
+        // Get wrapped lines
+        const scaledMaxWidth = LABEL.MAX_WIDTH / globalScale;
+        const lines = wrapText(ctx, node.title, scaledMaxWidth);
+        
+        // Calculate dimensions with separate padding values
+        const totalHeight = (lines.length * lineHeight) + topPadding + bottomPadding;
+        const maxLineWidth = Math.max(...lines.map(line => ctx.measureText(line).width));
+        const totalWidth = maxLineWidth + (hPadding * 2);
+        
+        // Draw background
+        const bgX = node.x - totalWidth / 2;
+        const bgY = node.y + radius + LABEL.VERTICAL_OFFSET / globalScale;
         
         ctx.fillStyle = COLORS.LABEL_BACKGROUND;
         ctx.fillRect(
-          node.x - textWidth / 2 - padding,
-          node.y + radius + LABEL.VERTICAL_OFFSET / globalScale,
-          textWidth + padding * 2,
-          textHeight + padding * 2
+          bgX,
+          bgY,
+          totalWidth,
+          totalHeight
         );
         
+        // Draw text lines with top padding
         ctx.fillStyle = COLORS.LABEL_TEXT;
-        ctx.fillText(
-          label, 
-          node.x, 
-          node.y + radius + (LABEL.VERTICAL_OFFSET + 1) / globalScale
-        );
+        lines.forEach((line, index) => {
+          const y = bgY + topPadding + (index * lineHeight);
+          ctx.fillText(line, node.x, y);
+        });
       }
 
-      // Draw debug overlay
+      // Debug overlay section remains the same
       if (showDebugPanel && showDebugOverlay && globalScale >= ZOOM.THRESHOLD) {
         const rect = labelRects.find(r => r.id === node.id);
         if (rect) {
@@ -176,7 +191,7 @@ const MovieNetworkGraph = ({ initialShowDebug = DEBUG.INITIAL_SHOW_PANEL }) => {
         }
       }
     };
-  }, [visibleLabels, showDebugPanel, showDebugOverlay, labelRects, truncateTitle]);
+  }, [visibleLabels, showDebugPanel, showDebugOverlay, labelRects]);
 
   const graphConfig = useMemo(() => createForceGraphConfig({
     paintNode,
