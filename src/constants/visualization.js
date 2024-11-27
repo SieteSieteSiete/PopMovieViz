@@ -23,8 +23,8 @@ export const LABEL = {
     LINE_HEIGHT: 12
   },
   PADDING: {
-    HORIZONTAL: 2,    // Renamed from just PADDING for clarity
-    TOP: 2,          // Split vertical padding into TOP
+    HORIZONTAL: 0,    // Renamed from just PADDING for clarity
+    TOP: 0,          // Split vertical padding into TOP
     BOTTOM: 0        // and BOTTOM for more control
   },
   VERTICAL_OFFSET: 2,

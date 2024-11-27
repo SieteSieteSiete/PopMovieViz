@@ -27,16 +27,28 @@ export class LabelCollisionDetector {
       
       const radius = (node.size / 2) * NODE.SIZE_SCALE;
       const maxLineWidth = Math.max(...lines.map(line => ctx.measureText(line).width));
-      const totalHeight = (lines.length * lineHeight) + topPadding + bottomPadding;
+      const textHeight = lines.length * lineHeight;
       const totalWidth = maxLineWidth + (hPadding * 2);
+      const totalHeight = textHeight + topPadding + bottomPadding;
+      const verticalOffset = LABEL.VERTICAL_OFFSET / globalScale;
 
+      // Calculate the rectangle position with proper top padding
       const rect = {
         id: node.id,
         x: node.x - totalWidth / 2,
-        y: node.y + radius + LABEL.VERTICAL_OFFSET / globalScale,
+        // Adjust y position to account for top padding
+        y: node.y + radius + verticalOffset - topPadding, // Subtract topPadding to extend box upward
         width: totalWidth,
         height: totalHeight,
-        collides: false
+        collides: false,
+        // Store additional metadata for debugging
+        debug: {
+          lines: lines.length,
+          textHeight,
+          topPadding,
+          bottomPadding,
+          totalHeight
+        }
       };
 
       minX = Math.min(minX, rect.x);

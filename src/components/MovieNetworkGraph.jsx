@@ -137,9 +137,7 @@ const MovieNetworkGraph = ({ initialShowDebug = DEBUG.INITIAL_SHOW_PANEL }) => {
       if (globalScale >= ZOOM.THRESHOLD && visibleLabels.has(node.id)) {
         const fontSize = LABEL.FONT.SIZE / globalScale;
         const lineHeight = LABEL.FONT.LINE_HEIGHT / globalScale;
-        const hPadding = LABEL.PADDING.HORIZONTAL / globalScale;
-        const topPadding = LABEL.PADDING.TOP / globalScale;
-        const bottomPadding = LABEL.PADDING.BOTTOM / globalScale;
+        const verticalOffset = LABEL.VERTICAL_OFFSET / globalScale;
         
         ctx.font = `${fontSize}px ${LABEL.FONT.FAMILY}`;
         ctx.textAlign = 'center';
@@ -149,27 +147,17 @@ const MovieNetworkGraph = ({ initialShowDebug = DEBUG.INITIAL_SHOW_PANEL }) => {
         const scaledMaxWidth = LABEL.MAX_WIDTH / globalScale;
         const lines = wrapText(ctx, node.title, scaledMaxWidth);
         
-        // Calculate dimensions with separate padding values
-        const totalHeight = (lines.length * lineHeight) + topPadding + bottomPadding;
-        const maxLineWidth = Math.max(...lines.map(line => ctx.measureText(line).width));
-        const totalWidth = maxLineWidth + (hPadding * 2);
+        // Draw text with outline for better visibility
+        ctx.strokeStyle = 'rgba(0, 0, 0, 0.8)';
+        ctx.lineWidth = 3 / globalScale;
+        ctx.lineJoin = 'round';
         
-        // Draw background
-        const bgX = node.x - totalWidth / 2;
-        const bgY = node.y + radius + LABEL.VERTICAL_OFFSET / globalScale;
-        
-        ctx.fillStyle = COLORS.LABEL_BACKGROUND;
-        ctx.fillRect(
-          bgX,
-          bgY,
-          totalWidth,
-          totalHeight
-        );
-        
-        // Draw text lines with top padding
-        ctx.fillStyle = COLORS.LABEL_TEXT;
         lines.forEach((line, index) => {
-          const y = bgY + topPadding + (index * lineHeight);
+          const y = node.y + radius + verticalOffset + (index * lineHeight);
+          // Draw text outline
+          ctx.strokeText(line, node.x, y);
+          // Draw text
+          ctx.fillStyle = COLORS.LABEL_TEXT;
           ctx.fillText(line, node.x, y);
         });
       }
