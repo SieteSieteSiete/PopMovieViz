@@ -6,6 +6,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 function App() {
   return (
     <ErrorBoundary
+      context="application"
       title="Application Error"
       message="An unexpected error occurred in the application"
       showReload={true}

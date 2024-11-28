@@ -188,35 +188,20 @@ const MovieNetworkGraph = ({ initialShowDebug = DEBUG.INITIAL_SHOW_PANEL }) => {
     onRenderFramePre: handleRenderFramePre
   }), [paintNode, handleNodeHover, handleNodeClick, handleRenderFramePre]);
 
+  // Handle expected states directly in component flow
   if (loading) {
     return <LoadingState type="initial" />;
   }
 
   if (error) {
     return (
-      <div className="w-screen h-screen relative">
-        <ErrorDisplay
-          title="Failed to Load Data"
-          message="Unable to load the movie network data. Please try again."
-          error={error}
-          onRetry={handleReset}
-          showDetails={process.env.NODE_ENV === 'development'}
-        />
-      </div>
-    );
-  }
-
-  if (renderError) {
-    return (
-      <div className="w-screen h-screen relative">
-        <ErrorDisplay
-          title="Visualization Error"
-          message="There was an error rendering the movie network visualization."
-          error={renderError}
-          onRetry={handleReset}
-          showDetails={process.env.NODE_ENV === 'development'}
-        />
-      </div>
+      <ErrorDisplay
+        title="Data Loading Error"
+        message="Unable to load the movie network data"
+        error={error}
+        onRetry={handleReset}
+        showDetails={process.env.NODE_ENV === 'development'}
+      />
     );
   }
 

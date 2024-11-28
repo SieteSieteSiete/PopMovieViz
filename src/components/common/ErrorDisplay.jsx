@@ -6,8 +6,10 @@ const ErrorDisplay = memo(({
   title = 'Error',
   message = 'An unexpected error occurred',
   error,
+  errorInfo,
   onRetry,
-  showDetails = false
+  showDetails = false,
+  context
 }) => {
   return (
     <div className="fixed inset-0 w-screen h-screen bg-gray-900 flex items-center justify-center p-4">
@@ -39,13 +41,22 @@ const ErrorDisplay = memo(({
         </p>
 
         {showDetails && error && (
-          <div className="mb-4 p-3 bg-gray-900 rounded text-sm font-mono text-gray-400 overflow-auto">
-            {error.toString()}
+          <div className="space-y-2">
+            <div className="mb-4 p-3 bg-gray-900 rounded text-sm font-mono text-gray-400 overflow-auto">
+              <p className="font-semibold mb-1">Error:</p>
+              {error.toString()}
+            </div>
+            {errorInfo && (
+              <div className="mb-4 p-3 bg-gray-900 rounded text-sm font-mono text-gray-400 overflow-auto">
+                <p className="font-semibold mb-1">Component Stack:</p>
+                {errorInfo.componentStack}
+              </div>
+            )}
           </div>
         )}
 
         {onRetry && (
-          <div className="flex justify-center">
+          <div className="flex justify-center mt-4">
             <button
               onClick={onRetry}
               className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-800"
@@ -63,8 +74,10 @@ ErrorDisplay.propTypes = {
   title: PropTypes.string,
   message: PropTypes.string,
   error: PropTypes.any,
+  errorInfo: PropTypes.object,
   onRetry: PropTypes.func,
-  showDetails: PropTypes.bool
+  showDetails: PropTypes.bool,
+  context: PropTypes.string
 };
 
 ErrorDisplay.displayName = 'ErrorDisplay';

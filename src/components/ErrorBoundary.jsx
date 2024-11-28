@@ -1,4 +1,4 @@
-//src/components/ErrorBoundary.jsx
+// src/components/ErrorBoundary.jsx
 import React from 'react';
 import PropTypes from 'prop-types';
 import ErrorDisplay from './common/ErrorDisplay';
@@ -24,10 +24,11 @@ class ErrorBoundary extends React.Component {
     });
 
     // Log error to your preferred logging service
-    console.error('Graph Visualization Error:', {
+    console.error('Application Error:', {
       error,
       componentStack: errorInfo.componentStack,
       timestamp: new Date().toISOString(),
+      context: this.props.context || 'general'
     });
   }
 
@@ -38,7 +39,6 @@ class ErrorBoundary extends React.Component {
       errorInfo: null
     });
     
-    // Attempt recovery by refreshing data or resetting state
     if (this.props.onReset) {
       this.props.onReset();
     }
@@ -46,13 +46,17 @@ class ErrorBoundary extends React.Component {
 
   render() {
     if (this.state.hasError) {
+      const isDev = process.env.NODE_ENV === 'development';
+      
       return (
         <ErrorDisplay
           title={this.props.title || 'Something went wrong'}
-          message={this.props.message || 'An error occurred while rendering the visualization'}
-          error={process.env.NODE_ENV === 'development' ? this.state.error : null}
-          onRetry={this.handleReset}
-          showDetails={process.env.NODE_ENV === 'development'}
+          message={this.props.message || 'An unexpected error occurred'}
+          error={isDev ? this.state.error : null}
+          errorInfo={isDev ? this.state.errorInfo : null}
+          onRetry={this.props.showReload ? this.handleReset : null}
+          showDetails={isDev}
+          context={this.props.context}
         />
       );
     }
@@ -66,11 +70,13 @@ ErrorBoundary.propTypes = {
   title: PropTypes.string,
   message: PropTypes.string,
   onReset: PropTypes.func,
-  showReload: PropTypes.bool
+  showReload: PropTypes.bool,
+  context: PropTypes.string
 };
 
 ErrorBoundary.defaultProps = {
-  showReload: true
+  showReload: true,
+  context: 'general'
 };
 
 export default ErrorBoundary;
