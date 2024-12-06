@@ -29,7 +29,11 @@ export const LABEL = {
   },
   VERTICAL_OFFSET: 2,
   MAX_LINES: 2,
-  MAX_WIDTH: 71
+  MAX_WIDTH: 71,
+  REPULSION: {
+    STRENGTH: 0.5,  // Added repulsion configuration
+    MIN_DISTANCE: 1 // Minimum distance before repulsion takes effect
+  }
 };
 
 export const NODE = {

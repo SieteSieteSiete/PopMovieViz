@@ -4,6 +4,27 @@ import { LABEL, NODE, ZOOM } from '../constants';
 import { wrapText } from './textWrapper';
 
 export class LabelCollisionDetector {
+  /**
+   * Check if a label rectangle intersects with a node circle
+   * @param {Object} labelRect - Label rectangle bounds
+   * @param {Object} node - Node to check against
+   * @param {number} nodeRadius - Radius of the node
+   * @returns {boolean} True if there is intersection
+   */
+  static checkLabelNodeCollision(labelRect, node, nodeRadius) {
+    // Find closest point on rectangle to circle center
+    const closestX = Math.max(labelRect.x, Math.min(node.x, labelRect.x + labelRect.width));
+    const closestY = Math.max(labelRect.y, Math.min(node.y, labelRect.y + labelRect.height));
+    
+    // Calculate distance between closest point and circle center
+    const dx = node.x - closestX;
+    const dy = node.y - closestY;
+    const distanceSquared = dx * dx + dy * dy;
+    
+    // Check if distance is less than circle radius
+    return distanceSquared < nodeRadius * nodeRadius;
+  }
+
   static calculateLabelRects(nodes, ctx, globalScale) {
     if (globalScale < ZOOM.THRESHOLD) return { visibleNodes: new Set(), labelRects: [] };
 
@@ -36,12 +57,13 @@ export class LabelCollisionDetector {
       const rect = {
         id: node.id,
         x: node.x - totalWidth / 2,
-        // Adjust y position to account for top padding
-        y: node.y + radius + verticalOffset - topPadding, // Subtract topPadding to extend box upward
+        y: node.y + radius + verticalOffset - topPadding,
         width: totalWidth,
         height: totalHeight,
         collides: false,
-        // Store additional metadata for debugging
+        node,
+        centerX: node.x,
+        centerY: node.y + radius + verticalOffset + textHeight / 2,
         debug: {
           lines: lines.length,
           textHeight,
@@ -70,13 +92,41 @@ export class LabelCollisionDetector {
     const visibleNodes = new Set();
     const processedNodes = new Set();
 
-    // Process all labels for collision detection
+    // Process all labels for collision detection and apply forces
     for (const labelRect of labelRects) {
       if (processedNodes.has(labelRect.id)) continue;
 
       const collisions = quadtree.query(labelRect);
+      let hasCollision = false;
+
+      // Check for label-to-node collisions
+      nodes.forEach(otherNode => {
+        if (otherNode.id === labelRect.id) return; // Skip self
+
+        const nodeRadius = (otherNode.size / 2) * NODE.SIZE_SCALE;
+        if (this.checkLabelNodeCollision(labelRect, otherNode, nodeRadius)) {
+          hasCollision = true;
+          labelRect.collides = true;
+
+          // Calculate and apply repulsion force
+          const dx = otherNode.x - labelRect.centerX;
+          const dy = otherNode.y - labelRect.centerY;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance > 0) {
+            const force = LABEL.REPULSION.STRENGTH / 
+              Math.max(LABEL.REPULSION.MIN_DISTANCE, distance);
+
+            if (otherNode.vx !== undefined) {
+              otherNode.vx += (dx / distance) * force;
+              otherNode.vy += (dy / distance) * force;
+            }
+          }
+        }
+      });
       
-      if (collisions.length === 0) {
+      // Original label-to-label collision handling
+      if (!hasCollision && collisions.length === 0) {
         visibleNodes.add(labelRect.id);
         quadtree.insert(labelRect);
       } else {
@@ -84,10 +134,25 @@ export class LabelCollisionDetector {
         visibleNodes.delete(labelRect.id);
         labelRect.collides = true;
         
+        // Apply repulsion forces for each label collision
         for (const collision of collisions) {
           processedNodes.add(collision.id);
           visibleNodes.delete(collision.id);
           collision.collides = true;
+
+          const dx = collision.node.x - labelRect.centerX;
+          const dy = collision.node.y - labelRect.centerY;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          
+          if (distance > 0) {
+            const force = LABEL.REPULSION.STRENGTH / 
+              Math.max(LABEL.REPULSION.MIN_DISTANCE, distance);
+            
+            if (collision.node.vx !== undefined) {
+              collision.node.vx += (dx / distance) * force;
+              collision.node.vy += (dy / distance) * force;
+            }
+          }
         }
       }
     }
