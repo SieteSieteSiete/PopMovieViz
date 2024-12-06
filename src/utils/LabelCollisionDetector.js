@@ -21,16 +21,13 @@ import { wrapText } from "./textWrapper";
  * @property {number} y - Y position
  * @property {number} width - Rectangle width
  * @property {number} height - Rectangle height
- * @property {boolean} collides - Whether this label collides with others
+ * @property {boolean} collides - Whether this label collides with anything
+ * @property {boolean} nodeCollision - Whether this label collides with nodes
+ * @property {boolean} labelCollision - Whether this label collides with other labels
  * @property {GraphNode} node - Reference to the graph node
  * @property {number} centerX - Center X position
  * @property {number} centerY - Center Y position
  * @property {Object} debug - Debug information
- * @property {number} debug.lines - Number of text lines
- * @property {number} debug.textHeight - Height of text
- * @property {number} debug.topPadding - Top padding
- * @property {number} debug.bottomPadding - Bottom padding
- * @property {number} debug.totalHeight - Total height including padding
  */
 
 /**
@@ -38,19 +35,10 @@ import { wrapText } from "./textWrapper";
  * @property {Set<string>} visibleNodes - Set of visible node IDs
  * @property {LabelRect[]} labelRects - Array of label rectangles with collision info
  * @property {number} labelNodeCollisions - Number of label-to-node collisions
+ * @property {number} labelLabelCollisions - Number of label-to-label collisions
  */
 
-/**
- * Handles detection and resolution of collisions between labels and nodes
- */
 export class LabelCollisionDetector {
-  /**
-   * Check if a label rectangle intersects with a node circle
-   * @param {LabelRect} labelRect - Label rectangle bounds
-   * @param {GraphNode} node - Node to check against
-   * @param {number} nodeRadius - Radius of the node
-   * @returns {boolean} True if there is intersection
-   */
   static checkLabelNodeCollision(labelRect, node, nodeRadius) {
     if (!labelRect || !node || nodeRadius === undefined) {
       console.warn(
@@ -78,13 +66,6 @@ export class LabelCollisionDetector {
     return distanceSquared < nodeRadius * nodeRadius;
   }
 
-  /**
-   * Calculate label rectangles and handle collisions
-   * @param {GraphNode[]} nodes - Array of graph nodes
-   * @param {CanvasRenderingContext2D} ctx - Canvas context
-   * @param {number} globalScale - Current zoom scale
-   * @returns {CollisionResult} Collision detection results
-   */
   static calculateLabelRects(nodes, ctx, globalScale) {
     if (!nodes || !Array.isArray(nodes)) {
       console.warn("LabelCollisionDetector: Invalid nodes array provided");
@@ -92,6 +73,7 @@ export class LabelCollisionDetector {
         visibleNodes: new Set(),
         labelRects: [],
         labelNodeCollisions: 0,
+        labelLabelCollisions: 0,
       };
     }
 
@@ -101,6 +83,7 @@ export class LabelCollisionDetector {
         visibleNodes: new Set(),
         labelRects: [],
         labelNodeCollisions: 0,
+        labelLabelCollisions: 0,
       };
     }
 
@@ -109,6 +92,7 @@ export class LabelCollisionDetector {
         visibleNodes: new Set(),
         labelRects: [],
         labelNodeCollisions: 0,
+        labelLabelCollisions: 0,
       };
     }
 
@@ -141,7 +125,6 @@ export class LabelCollisionDetector {
       const totalHeight = textHeight + topPadding + bottomPadding;
       const verticalOffset = LABEL.VERTICAL_OFFSET / globalScale;
 
-      // Calculate the rectangle position with proper top padding
       const rect = {
         id: node.id,
         x: node.x - totalWidth / 2,
@@ -149,6 +132,8 @@ export class LabelCollisionDetector {
         width: totalWidth,
         height: totalHeight,
         collides: false,
+        nodeCollision: false,
+        labelCollision: false,
         node,
         centerX: node.x,
         centerY: node.y + radius + verticalOffset + textHeight / 2,
@@ -180,25 +165,26 @@ export class LabelCollisionDetector {
     const visibleNodes = new Set();
     const processedNodes = new Set();
     let labelNodeCollisions = 0;
+    let labelLabelCollisions = 0;
 
-    // Process all labels for collision detection and apply forces
+    // Process all labels for collision detection
     for (const labelRect of labelRects) {
       if (processedNodes.has(labelRect.id)) continue;
 
-      const collisions = quadtree.query(labelRect);
       let hasCollision = false;
 
       // Check for label-to-node collisions
       nodes.forEach((otherNode) => {
-        if (otherNode.id === labelRect.id) return; // Skip self
+        if (otherNode.id === labelRect.id) return;
 
         const nodeRadius = (otherNode.size / 2) * NODE.SIZE_SCALE;
         if (this.checkLabelNodeCollision(labelRect, otherNode, nodeRadius)) {
           hasCollision = true;
           labelRect.collides = true;
+          labelRect.nodeCollision = true;
           labelNodeCollisions++;
 
-          // Calculate and apply repulsion force
+          // Apply repulsion force
           const dx = otherNode.x - labelRect.centerX;
           const dy = otherNode.y - labelRect.centerY;
           const distance = Math.sqrt(dx * dx + dy * dy);
@@ -216,20 +202,18 @@ export class LabelCollisionDetector {
         }
       });
 
-      // Original label-to-label collision handling
-      if (!hasCollision && collisions.length === 0) {
-        visibleNodes.add(labelRect.id);
-        quadtree.insert(labelRect);
-      } else {
-        processedNodes.add(labelRect.id);
-        visibleNodes.delete(labelRect.id);
+      // Check for label-to-label collisions
+      const collisions = quadtree.query(labelRect);
+      if (collisions.length > 0) {
+        hasCollision = true;
         labelRect.collides = true;
+        labelRect.labelCollision = true;
+        labelLabelCollisions += collisions.length;
 
-        // Apply repulsion forces for each label collision
-        for (const collision of collisions) {
-          processedNodes.add(collision.id);
-          visibleNodes.delete(collision.id);
+        collisions.forEach((collision) => {
           collision.collides = true;
+          collision.labelCollision = true;
+          processedNodes.add(collision.id);
 
           const dx = collision.node.x - labelRect.centerX;
           const dy = collision.node.y - labelRect.centerY;
@@ -245,10 +229,22 @@ export class LabelCollisionDetector {
               collision.node.vy += (dy / distance) * force;
             }
           }
-        }
+        });
+      }
+
+      if (!hasCollision) {
+        visibleNodes.add(labelRect.id);
+        quadtree.insert(labelRect);
+      } else {
+        processedNodes.add(labelRect.id);
       }
     }
 
-    return { visibleNodes, labelRects, labelNodeCollisions };
+    return {
+      visibleNodes,
+      labelRects,
+      labelNodeCollisions,
+      labelLabelCollisions,
+    };
   }
 }

@@ -75,7 +75,7 @@ const MovieNetworkGraph = ({ initialShowDebug = DEBUG.INITIAL_SHOW_PANEL }) => {
   const [renderError, setRenderError] = useState(null);
 
   const { visibleLabels, labelRects, updateLabelVisibility } =
-    useLabelManagement(ZOOM.THRESHOLD);
+    useLabelManagement();
 
   const handleReset = useCallback(() => {
     setGraphData(null);
@@ -145,33 +145,39 @@ const MovieNetworkGraph = ({ initialShowDebug = DEBUG.INITIAL_SHOW_PANEL }) => {
       ctx.fillStyle = node.color;
       ctx.fill();
 
-      // Draw label if visible and zoomed in enough
+      // Draw label if visible, zoomed in enough, and no collisions
       if (globalScale >= ZOOM.THRESHOLD && visibleLabels.has(node.id)) {
-        const fontSize = LABEL.FONT.SIZE / globalScale;
-        const lineHeight = LABEL.FONT.LINE_HEIGHT / globalScale;
-        const verticalOffset = LABEL.VERTICAL_OFFSET / globalScale;
+        // Find the label rectangle for this node
+        const labelRect = labelRects.find((rect) => rect.id === node.id);
 
-        ctx.font = `${fontSize}px ${LABEL.FONT.FAMILY}`;
-        ctx.textAlign = "center";
-        ctx.textBaseline = "top";
+        // Only draw the label if it's not colliding
+        if (labelRect && !labelRect.collides) {
+          const fontSize = LABEL.FONT.SIZE / globalScale;
+          const lineHeight = LABEL.FONT.LINE_HEIGHT / globalScale;
+          const verticalOffset = LABEL.VERTICAL_OFFSET / globalScale;
 
-        // Get wrapped lines
-        const scaledMaxWidth = LABEL.MAX_WIDTH / globalScale;
-        const lines = wrapText(ctx, node.title, scaledMaxWidth);
+          ctx.font = `${fontSize}px ${LABEL.FONT.FAMILY}`;
+          ctx.textAlign = "center";
+          ctx.textBaseline = "top";
 
-        // Draw text with outline for better visibility
-        ctx.strokeStyle = "rgba(0, 0, 0, 0.8)";
-        ctx.lineWidth = 3 / globalScale;
-        ctx.lineJoin = "round";
+          // Get wrapped lines
+          const scaledMaxWidth = LABEL.MAX_WIDTH / globalScale;
+          const lines = wrapText(ctx, node.title, scaledMaxWidth);
 
-        lines.forEach((line, index) => {
-          const y = node.y + radius + verticalOffset + index * lineHeight;
-          // Draw text outline
-          ctx.strokeText(line, node.x, y);
-          // Draw text
-          ctx.fillStyle = COLORS.LABEL_TEXT;
-          ctx.fillText(line, node.x, y);
-        });
+          // Draw text with outline for better visibility
+          ctx.strokeStyle = "rgba(0, 0, 0, 0.8)";
+          ctx.lineWidth = 3 / globalScale;
+          ctx.lineJoin = "round";
+
+          lines.forEach((line, index) => {
+            const y = node.y + radius + verticalOffset + index * lineHeight;
+            // Draw text outline
+            ctx.strokeText(line, node.x, y);
+            // Draw text
+            ctx.fillStyle = COLORS.LABEL_TEXT;
+            ctx.fillText(line, node.x, y);
+          });
+        }
       }
 
       // Debug overlay section
